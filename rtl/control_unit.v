@@ -3,6 +3,7 @@ module control_unit(
     input rs_eq_rt,
     input [4:0] exe_reg,
     input [4:0] mem_reg,
+    input wb_write_regfile,
 
     output write_men,
     output write_regfile,
@@ -223,4 +224,59 @@ module control_unit(
     assign inst_tlbwi = (op == 6'd16) & (rs == 5'd16) & (func == 6'd2);
     assign inst_tlbwr = (op == 6'd16) ^ (rs == 5'd16) & (func == 6'd6);
     //assign inst_wait = 
+
+    wire [:0] ALUControl;
+    wire ADDU_inst = inst_addu | inst_addiu | inst_lw | inst_sw;
+    wire ADD_inst = inst_add | inst_addi;
+    wire SUB_inst = inst_sub;
+    wire SUBU_inst = inst_subu;
+    wire AND_inst = inst_and | inst_andi;
+    wire OR_inst = inst_or | inst_ori;
+    wire XOR_inst = inst_xor | inst_xori;
+    wire NOR_inst = inst_nor;
+    wire SLT_inst = inst_slt | inst_slti;
+    wire SLTU_inst = inst_sltu | inst_sltiu;
+    wire SLL_inst = inst_sll | inst_sllv;
+    wire SRL_inst = inst_srl | inst_srlv;
+    wire SRA_inst = inst_sra | inst_srav;
+    wire LUI_inst = inst_lui;
+    wire JUMP_BRANCH_inst = inst_jr | inst_beq | inst_bne | inst_j | inst_jal;
+
+    //
+    assign R_type = inst_add | inst_addu | inst_sub | inst_subu | inst_or | inst_xor | inst_nor | inst_slt | inst_sltu | inst_sll | inst_srl | inst_sra | inst_sllv | inst_srlv
+                    inst_srav | inst_jr;
+    assign I_type = inst_addi | inst_addiu | inst_andi | inst_ori | inst_xori | inst_lui | inst_lw | inst_sw | inst_beq | inst_bne | inst_slti | inst_sltiu;
+    assign J_type = inst_j | inst_jal;
+
+    assign ALUControl = {
+        ADDU_inst,
+        ADD_inst,
+        SUB_inst,
+        SUBU_inst,
+        AND_inst,
+        OR_inst,
+        XOR_inst,
+        NOR_inst,
+        SLT_inst,
+        SLTU_inst,
+        SLL_inst,
+        SRL_inst,
+        SRA_inst,
+        LUI_inst,
+        JUMP_BRANCH_inst
+    }
+
+    assign write_mem = inst_sw;
+    assign write_regfile = inst_add | inst_addu | inst_sub | inst_subu | inst_add | inst_or | inst_xor |
+                           inst_nor | inst_slt | inst_sltu | inst_sll | inst_srl | inst_sra | inst_sllv |
+                           inst_srlv | inst_srav | inst_addi | inst_addiu | inst_andi | inst_ori | inst_xori |
+                           inst_lui | inst_slti | inst_sltiu | inst_jal;
+    assign jal = inst_jal;
+    assign aluimm = inst_addi | inst_addiu | inst_andi | inst_ori | inst_xori | inst_lui | inst_lw | inst_sw |
+                    inst_slti | inst_sltiu;
+    assign shift = inst_sll | inst_srl | inst_sra | inst_sllv | inst_srlv | inst_srav;
+    assign sext = inst_addi | inst_lw | inst_sw | inst_beq | inst_bne | inst_slti | inst_sltiu; //1'b1 sign : 1'b0 zero
+    assign rd_or_rt = inst_add | inst_addu | inst_sub | inst_subu | inst_and | inst_or | inst_xor | inst_nor |
+                      inst_slt | inst_sltu | inst_sll | inst_srl | inst_sra | inst_sllv | inst_srlv | inst_srav; //1'b1 rd : 1'b0 rt
+
 endmodule
