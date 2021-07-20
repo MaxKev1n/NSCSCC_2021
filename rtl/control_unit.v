@@ -1,11 +1,12 @@
 module control_unit(
     input [31:0] inst,
+    input [31:0] pc,
     input rs_eq_rt,
     input [4:0] exe_reg,
     input [4:0] mem_reg,
     input wb_write_regfile,
 
-    output write_men,
+    output write_mem,
     output write_regfile,
     output jal,
     output aluimm,
@@ -13,13 +14,16 @@ module control_unit(
     output sext,
     output rd_or_rt,
     output fwda,
-    output fwdb
+    output fwdb,
+    output [31:0] bpc,
+    output [31:0] jpc,
+    output [1:0] pcsource
 );
 
-    wire op[5:0] = inst[31:26];
-    wire rs[4:0] = inst[25:21];
-    wire rt[4:0] = inst[20:16];
-    wire func[5:0] = inst[5:0];
+    wire [5:0] op = inst[31:26];
+    wire [4:0] rs = inst[25:21];
+    wire [4:0] rt = inst[20:16];
+    wire [5:0] func = inst[5:0];
 
     wire inst_add;
     wire inst_addi;
@@ -225,7 +229,7 @@ module control_unit(
     assign inst_tlbwr = (op == 6'd16) ^ (rs == 5'd16) & (func == 6'd6);
     //assign inst_wait = 
 
-    wire [:0] ALUControl;
+    wire [14:0] ALUControl;
     wire ADDU_inst = inst_addu | inst_addiu | inst_lw | inst_sw;
     wire ADD_inst = inst_add | inst_addi;
     wire SUB_inst = inst_sub;
@@ -279,4 +283,11 @@ module control_unit(
     assign rd_or_rt = inst_add | inst_addu | inst_sub | inst_subu | inst_and | inst_or | inst_xor | inst_nor |
                       inst_slt | inst_sltu | inst_sll | inst_srl | inst_sra | inst_sllv | inst_srlv | inst_srav; //1'b1 rd : 1'b0 rt
 
+    wire is_branch = rs_eq_rt & beq ? 1'b1 : (!rs_eq_rt & bne ? 1'b1 : 1'b0);
+    assign bpc = pc + {16{inst[15], inst[15:0]}};
+    wire is_jump = inst_jal | inst_j;
+    assign jpc = {pc[31:28], inst[25:0], 2'b00}; //?
+    wire is_jump_jr = inst_jr;
+
+    assign pcsource = is_branch ? 2'b11 : (is_jump ? 2'b10 : (is_jump_jr ? : 2'b01 : 2'b00));
 endmodule

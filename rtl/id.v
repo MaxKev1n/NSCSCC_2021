@@ -1,4 +1,42 @@
-module id(
-    
+module ID(
+    input [31:0] i_inst,
+    input clk,
+    input reset,
+    input [31:0] i_pc,
+    input [4:0] exe_reg,
+    input [4:0] mem_reg,
+    input wb_write_regfile,
+    input [4:0] waddr,
+    input [31:0] wdata,
+
+    output [31:0] o_pc,
+    output [31:0] da,
+    output [31:0] db,
+    output [31:0] imm,
+    output [4:0] rn,
+    output write_mem,
+    output write_regfile,
+    output jal,
+    output aluimm,
+    output shift,
+    output [31:0] bpc,
+    output [31:0] jpc,
+    output [31:0] jrpc,
+    output [1:0] pcsource
 );
+    wire rs_eq_rt;
+    wire rd_or_rt;
+    wire fwda, fwdb;
+    wire [31:0] qa, qb;
+
+    assign rs_eq_rt = qa == qb ? 1'b1 : 1'b0;
+
+    control_unit CU(.inst(i_inst), .pc(i_pc), .rs_eq_rt(rs_eq_rt), .exe_reg(exe_reg), .mem_reg(mem_reg),
+                    .wb_write_regfile(wb_write_regfile), .write_mem(write_mem), .write_regfile(write_regfile),
+                    .jal(jal), .aluimm(aluimm), .shift(shift), .sext(sext), .rd_or_rt(rd_or_rt), .fwda(fwda),
+                    .fwdb(fwdb), .bpc(bpc), .jpc(jpc), .pcsource(pcsource));
+    
+    regfile REGFILE(.clk(clk), .reset(reset), .raddr1(inst[25:21]), .raddr2(inst[20:16]), .waddr(waddr),
+                    .i_data(wdata), .ena(wb_write_regfile), .o_output1(qa), .o_output2(qb));
+
 endmodule
