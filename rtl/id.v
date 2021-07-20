@@ -26,7 +26,7 @@ module ID(
 );
     wire rs_eq_rt;
     wire rd_or_rt;
-    wire fwda, fwdb;
+    wire [1:0] fwda, fwdb;
     wire [31:0] qa, qb;
 
     assign rs_eq_rt = qa == qb ? 1'b1 : 1'b0;
@@ -38,5 +38,11 @@ module ID(
     
     regfile REGFILE(.clk(clk), .reset(reset), .raddr1(inst[25:21]), .raddr2(inst[20:16]), .waddr(waddr),
                     .i_data(wdata), .ena(wb_write_regfile), .o_output1(qa), .o_output2(qb));
+
+    mux4x32 MUX1(.a0(qa), .a1(), .a2(), .a3(), .s(fwda), .res(da));
+    mux4x32 MUX2(.a0(qb), .a1(), .a2(), .a3(), .s(fwdb), .res(db));
+
+    assign imm = sext ? {16{inst[15]}, inst[15:0]} : {16'd0, inst[15:0]};
+    assign rn = rd_or_rt ? inst[15:11] : inst[20:16];
 
 endmodule
