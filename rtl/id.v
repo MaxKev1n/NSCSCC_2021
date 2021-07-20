@@ -22,7 +22,8 @@ module ID(
     output [31:0] bpc,
     output [31:0] jpc,
     output [31:0] jrpc,
-    output [1:0] pcsource
+    output [1:0] pcsource,
+    output [14:0] ALUControl
 );
     wire rs_eq_rt;
     wire rd_or_rt;
@@ -34,7 +35,7 @@ module ID(
     control_unit CU(.inst(i_inst), .pc(i_pc), .rs_eq_rt(rs_eq_rt), .exe_reg(exe_reg), .mem_reg(mem_reg),
                     .wb_write_regfile(wb_write_regfile), .write_mem(write_mem), .write_regfile(write_regfile),
                     .jal(jal), .aluimm(aluimm), .shift(shift), .sext(sext), .rd_or_rt(rd_or_rt), .fwda(fwda),
-                    .fwdb(fwdb), .bpc(bpc), .jpc(jpc), .pcsource(pcsource));
+                    .fwdb(fwdb), .bpc(bpc), .jpc(jpc), .pcsource(pcsource), .ALUControl(ALUControl));
     
     regfile REGFILE(.clk(clk), .reset(reset), .raddr1(inst[25:21]), .raddr2(inst[20:16]), .waddr(waddr),
                     .i_data(wdata), .ena(wb_write_regfile), .o_output1(qa), .o_output2(qb));

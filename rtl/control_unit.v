@@ -17,7 +17,8 @@ module control_unit(
     output fwdb,
     output [31:0] bpc,
     output [31:0] jpc,
-    output [1:0] pcsource
+    output [1:0] pcsource,
+    output [14:0] ALUControl
 );
 
     wire [5:0] op = inst[31:26];
@@ -229,7 +230,6 @@ module control_unit(
     assign inst_tlbwr = (op == 6'd16) ^ (rs == 5'd16) & (func == 6'd6);
     //assign inst_wait = 
 
-    wire [14:0] ALUControl;
     wire ADDU_inst = inst_addu | inst_addiu | inst_lw | inst_sw;
     wire ADD_inst = inst_add | inst_addi;
     wire SUB_inst = inst_sub;
