@@ -21,5 +21,10 @@ module exe(
 
     assign ALU1 = shift ? imm : da;
     assign ALU2 = aluimm ? imm : db;
+    assign pc8 = pc + 4;
+
+    ALU alu(.ALUControl(ALUControl), .da(da), .db(db), .dout(ALURes));
+    assign ea = jal ? pc8 : ALURes;
+    assign eb = db;
 
 endmodule

@@ -5,6 +5,7 @@ module id_exe(
     input [5:0] stall,
     input i_write_mem,
     input i_write_regfile,
+    input i_mem_to_regfile,
     input i_jal,
     input i_aluimm,
     input i_shift,
@@ -17,6 +18,7 @@ module id_exe(
 
     output o_write_mem,
     output o_write_regfile,
+    output o_mem_to_regfile,
     output o_jal,
     output o_aluimm,
     output o_shift,
@@ -31,6 +33,7 @@ module id_exe(
     if(reset) begin
         o_write_mem <= `ZeroBit;
         o_write_regfile <= `ZeroBit;
+        o_mem_to_regfile <= `ZeroBit;
         o_jal <= `ZeroBit;
         o_aluimm <= `ZeroBit;
         o_shift <= `ZeroBit;
@@ -43,6 +46,7 @@ module id_exe(
     end else if(stall[2] == `Stop && stall[3] == `NoStop) begin
         o_write_mem <= `ZeroBit;
         o_write_regfile <= `ZeroBit;
+        o_mem_to_regfile <= `ZeroBit;
         o_jal <= `ZeroBit;
         o_aluimm <= `ZeroBit;
         o_shift <= `ZeroBit;
@@ -52,9 +56,10 @@ module id_exe(
         o_imm <= `ZeroWord;
         o_rn <= 5'b00000;
         o_ALUControl <= 15'd0;
-    end else if(stall[2] == `Stop) begin
+    end else if(stall[2] == `NoStop) begin
         o_write_mem <= i_write_mem;
         o_write_regfile <= i_write_regfile;
+        o_mem_to_regfile <= i_mem_to_regfile;
         o_jal <= i_jal;
         o_aluimm <= i_aluimm;
         o_shift <= i_shift;

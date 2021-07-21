@@ -8,6 +8,7 @@ module control_unit(
 
     output write_mem,
     output write_regfile,
+    output mem_to_regfile,
     output jal,
     output aluimm,
     output shift,
@@ -275,6 +276,7 @@ module control_unit(
                            inst_nor | inst_slt | inst_sltu | inst_sll | inst_srl | inst_sra | inst_sllv |
                            inst_srlv | inst_srav | inst_addi | inst_addiu | inst_andi | inst_ori | inst_xori |
                            inst_lui | inst_slti | inst_sltiu | inst_jal;
+    assign mem_to_regfile = inst_lw;
     assign jal = inst_jal;
     assign aluimm = inst_addi | inst_addiu | inst_andi | inst_ori | inst_xori | inst_lui | inst_lw | inst_sw |
                     inst_slti | inst_sltiu;
