@@ -35,7 +35,7 @@ INFO: [VRFC 10-2263] Analyzing Verilog file "E:/NSCSCC/NSCSCC_2021/rtl/regfile.v
 INFO: [VRFC 10-311] analyzing module regfile
 INFO: [VRFC 10-2263] Analyzing Verilog file "E:/NSCSCC/NSCSCC_2021/rtl/top.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module top
-INFO: [VRFC 10-2458] undeclared symbol exe_mem_rn, assumed default net type wire [E:/NSCSCC/NSCSCC_2021/rtl/top.v:102]
+INFO: [VRFC 10-2458] undeclared symbol exe_mem_rn, assumed default net type wire [E:/NSCSCC/NSCSCC_2021/rtl/top.v:104]
 INFO: [VRFC 10-2263] Analyzing Verilog file "E:/NSCSCC/NSCSCC_2021/rtl/wb.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module wb
 INFO: [VRFC 10-2263] Analyzing Verilog file "E:/NSCSCC/NSCSCC_2021/project_1/project_1.srcs/sim_1/new/tb.v" into library xil_defaultlib

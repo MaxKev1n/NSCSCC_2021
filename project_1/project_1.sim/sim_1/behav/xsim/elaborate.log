@@ -4,10 +4,10 @@ Running: D:/Xilinx/Vivado/2019.2/bin/unwrapped/win64.o/xelab.exe -wto b9565a0f93
 Using 2 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
-WARNING: [VRFC 10-3091] actual bit length 5 differs from formal bit length 32 for port 'wdata' [E:/NSCSCC/NSCSCC_2021/rtl/top.v:78]
+WARNING: [VRFC 10-3091] actual bit length 5 differs from formal bit length 32 for port 'wdata' [E:/NSCSCC/NSCSCC_2021/rtl/top.v:80]
 WARNING: [VRFC 10-3091] actual bit length 2 differs from formal bit length 1 for port 'fwda' [E:/NSCSCC/NSCSCC_2021/rtl/ID.v:48]
-WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 5 for port 'i_rn' [E:/NSCSCC/NSCSCC_2021/rtl/top.v:102]
-WARNING: [VRFC 10-3091] actual bit length 5 differs from formal bit length 32 for port 'dataout' [E:/NSCSCC/NSCSCC_2021/rtl/top.v:106]
+WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 5 for port 'i_rn' [E:/NSCSCC/NSCSCC_2021/rtl/top.v:104]
+WARNING: [VRFC 10-3091] actual bit length 5 differs from formal bit length 32 for port 'dataout' [E:/NSCSCC/NSCSCC_2021/rtl/top.v:108]
 Completed static elaboration
 Starting simulation data flow analysis
 Completed simulation data flow analysis

@@ -6,7 +6,9 @@ module top(
     input [5:0] stall,
     output [31:0] pc,
     output [31:0] inst,
-    output [31:0] ALURes
+    output [31:0] ALURes,
+    output [31:0] id_da,
+    output [31:0] id_db
 );
 
     wire [31:0] npc;
@@ -27,8 +29,8 @@ module top(
     wire [4:0] waddr;
     wire [4:0] wdata;
     wire [31:0] id_pc;
-    wire [31:0] id_da;
-    wire [31:0] id_db;
+    //wire [31:0] id_da;
+    //wire [31:0] id_db;
     wire [31:0] id_imm;
     wire [4:0] id_rn;
     wire id_write_mem;
@@ -88,10 +90,10 @@ module top(
                   .o_ALUControl(id_exe_ALUControl), .o_mem_control(id_exe_mem_control));
 
     exe EXE(.jal(id_exe_jal), .aluimm(id_exe_aluimm), .shift(id_exe_shift), .pc(id_exe_pc), .da(id_exe_da), .db(id_exe_db), .imm(id_exe_imm),
-            .ALUControl(id_exe_ALUControl), .ea(ea), .eb(eb));
+            .ALUControl(id_exe_ALUControl), .ea(ALURes), .eb(eb));
 
     exe_mem EXE_MEM(.clk(clk), .reset(reset), .stall(stall), .i_write_mem(id_exe_write_mem), .i_write_regfile(id_exe_write_regfile),
-                    .i_mem_to_regfile(id_exe_mem_to_regfile), .i_da(ea), .i_db(eb), .i_rn(exe_reg), .i_mem_control(id_exe_mem_control),
+                    .i_mem_to_regfile(id_exe_mem_to_regfile), .i_da(ALURes), .i_db(eb), .i_rn(exe_reg), .i_mem_control(id_exe_mem_control),
                     .o_write_mem(exe_mem_write_mem), .o_write_regfile(exe_mem_write_regfile), .o_mem_to_regfile(exe_mem_mem_to_regfile),
                     .o_da(exe_mem_da), .o_db(exe_mem_db), .o_rn(mem_reg), .o_mem_control(exe_mem_mem_control));
     
