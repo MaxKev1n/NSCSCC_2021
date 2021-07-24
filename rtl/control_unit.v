@@ -7,6 +7,8 @@ module control_unit(
     input wb_write_regfile,
     input exe_mem_to_regfile,
     input mem_mem_to_regfile,
+    input exe_write_regfile,
+    input mem_write_regfile,
 
     output write_mem,
     output write_regfile,
@@ -296,6 +298,28 @@ module control_unit(
     assign pcsource = is_branch ? 2'b11 : (is_jump ? 2'b10 : (is_jump_jr ? 2'b01 : 2'b00));
 
     always @(*) begin
-        if()
+        fwda = 2'b00;
+        if(exe_write_regfile && (exe_reg != 5'b00000) && !exe_mem_to_regfile && (exe_reg == rs)) begin
+            fwda = 2'b01;
+        end else begin
+            if(mem_write_regfile && (mem_reg != 5'b00000) && !mem_mem_to_regfile && (mem_reg == rs)) begin
+                fwda = 2'b10;
+            end else if(mem_write_regfile && (mem_reg != 5'b00000) && mem_mem_to_regfile && (mem_reg == rs)) begin
+                fwda = 2'b11;
+            end
+        end
+    end
+
+    always @(*) begin
+        fwdb = 2'b00;
+        if(exe_write_regfile && (exe_reg != 5'b00000) && !exe_mem_to_regfile && (exe_reg == rt)) begin
+            fwdb = 2'b01;
+        end else begin
+            if(mem_write_regfile && (mem_reg != 5'b00000) && !mem_mem_to_regfile && (mem_reg == rt)) begin
+                fwdb = 2'b10;
+            end else if(mem_write_regfile && (mem_reg != 5'b00000) && mem_mem_to_regfile && (mem_reg == rt)) begin
+                fwdb = 2'b11;
+            end
+        end
     end
 endmodule
