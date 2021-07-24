@@ -1,3 +1,4 @@
+`include "global_define.vh"
 module exe_mem(
     input clk,
     input reset,
@@ -8,12 +9,12 @@ module exe_mem(
     input [31:0] i_da,
     input [31:0] i_db,
     input [4:0] i_rn,
-    output o_write_mem,
-    output o_write_regfile,
-    output o_mem_to_regfile,
-    output [31:0] o_da,
-    output [31:0] o_db,
-    output [4:0] o_rn
+    output reg o_write_mem,
+    output reg o_write_regfile,
+    output reg o_mem_to_regfile,
+    output reg [31:0] o_da,
+    output reg [31:0] o_db,
+    output reg [4:0] o_rn
 );
 
     always @(posedge clk) begin

@@ -1,9 +1,10 @@
+`include "global_define.vh"
 module ALU(
     input [14:0] ALUControl,
     input [31:0] da,
     input [31:0] db,
 
-    output [31:0] dout
+    output reg [31:0] dout
 );
 
     wire [31:0] complement;
@@ -32,23 +33,24 @@ module ALU(
                 dout = ~(da | db);
             end
             `SLT, `SLTU : begin
-                res = a_compare_b;
+                dout = a_compare_b;
             end
             `SLL : begin
-                res = b << a[4:0];
+                dout = db << da[4:0];
             end
             `SRL : begin
-                res = b >> a[4:0];
+                dout = db >> da[4:0];
             end
             `SRA : begin
-                res = b >>> a[4:0];
+                dout = db >>> da[4:0];
             end
             `LUI : begin
-                res = {db[15:0], 16'd0};
+                dout = {db[15:0], 16'd0};
             end
             default : begin
-                res = `ZeroWord;
+                dout = `ZeroWord;
             end
+        endcase
     end
 
 endmodule

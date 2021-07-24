@@ -39,13 +39,13 @@ module ID(
                     .rd_or_rt(rd_or_rt), .fwda(fwda), .fwdb(fwdb), .bpc(bpc), .jpc(jpc), .pcsource(pcsource),
                     .ALUControl(ALUControl));
     
-    regfile REGFILE(.clk(clk), .reset(reset), .raddr1(inst[25:21]), .raddr2(inst[20:16]), .waddr(waddr),
+    regfile REGFILE(.clk(clk), .reset(reset), .raddr1(i_inst[25:21]), .raddr2(i_inst[20:16]), .waddr(waddr),
                     .i_data(wdata), .ena(wb_write_regfile), .o_output1(qa), .o_output2(qb));
 
     mux4x32 MUX1(.a0(qa), .a1(), .a2(), .a3(), .s(fwda), .res(da));
     mux4x32 MUX2(.a0(qb), .a1(), .a2(), .a3(), .s(fwdb), .res(db));
 
-    assign imm = sext ? {16{inst[15]}, inst[15:0]} : {16'd0, inst[15:0]};
-    assign rn = rd_or_rt ? inst[15:11] : inst[20:16];
+    assign imm = sext ? {{16{i_inst[15]}}, i_inst[15:0]} : {16'd0, i_inst[15:0]};
+    assign rn = rd_or_rt ? i_inst[15:11] : i_inst[20:16];
 
 endmodule

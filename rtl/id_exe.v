@@ -16,21 +16,22 @@ module id_exe(
     input [4:0] i_rn,
     input [14:0] i_ALUControl,
 
-    output o_write_mem,
-    output o_write_regfile,
-    output o_mem_to_regfile,
-    output o_jal,
-    output o_aluimm,
-    output o_shift,
-    output [31:0] o_pc,
-    output [31:0] o_da,
-    output [31:0] o_db,
-    output [31:0] o_imm,
-    output [4:0] o_rn,
-    output [14:0] o_ALUControl
+    output reg o_write_mem,
+    output reg o_write_regfile,
+    output reg o_mem_to_regfile,
+    output reg o_jal,
+    output reg o_aluimm,
+    output reg o_shift,
+    output reg [31:0] o_pc,
+    output reg [31:0] o_da,
+    output reg [31:0] o_db,
+    output reg [31:0] o_imm,
+    output reg [4:0] o_rn,
+    output reg [14:0] o_ALUControl
 );
 
-    if(reset) begin
+    always @(posedge clk) begin
+        if(reset) begin
         o_write_mem <= `ZeroBit;
         o_write_regfile <= `ZeroBit;
         o_mem_to_regfile <= `ZeroBit;
@@ -69,6 +70,7 @@ module id_exe(
         o_imm <= i_imm;
         o_rn <= i_rn;
         o_ALUControl <= i_ALUControl;
+    end
     end
 
 endmodule

@@ -160,8 +160,8 @@ module control_unit(
     assign inst_bne = (op == 6'd5);
     assign inst_j = (op == 6'd2);
     assign inst_jal = (op == 6'd3);
-    assign inst_jalr = (op == 6'd0) & (func = 6'd9);
-    assign inst_jr = (op == 6'd0) & (func = 6'd8);
+    assign inst_jalr = (op == 6'd0) & (func == 6'd9);
+    assign inst_jr = (op == 6'd0) & (func == 6'd8);
     assign inst_lb = (op == 6'd32);
     assign inst_lbu = (op == 6'd36);
     assign inst_lh = (op == 6'd33);
@@ -206,15 +206,15 @@ module control_unit(
     assign inst_teqi = (op == 6'd1) & (rt == 5'd12);
     assign inst_tge = (op == 6'd0) & (func == 6'd48);
     assign inst_tgei = (op == 6'd1) & (rt == 5'd8);
-    assign inst_tgeiu = (op == 6'd10 & (rt == 5'd9);
+    assign inst_tgeiu = (op == 6'd10) & (rt == 5'd9);
     assign inst_tgeu = (op == 6'd0) & (func == 6'd49);
     assign inst_tlt = (op == 6'd0) & (func == 6'd50);
     assign inst_tlti = (op == 6'd1) & (rt == 5'd10);
     assign inst_tltiu = (op == 6'd1) & (rt == 5'd11);
     assign inst_tltu = (op == 6'd0) & (func == 6'd51);
     assign inst_tne = (op == 6'd0) & (func == 6'd64);
-    assign inst_tnei == (op == 6'd1) & (rt == 5'd18);
-    assign inst_beql == (op == 6'd20);
+    assign inst_tnei = (op == 6'd1) & (rt == 5'd18);
+    assign inst_beql = (op == 6'd20);
     assign inst_bgezall = (op == 6'd1) & (rt == 5'd19);
     assign inst_bgtzl = (op == 6'd23) & (rt == 5'd0);
     assign inst_blezl = (op == 6'd22) & (rt == 5'd0);
@@ -248,7 +248,7 @@ module control_unit(
     wire JUMP_BRANCH_inst = inst_jr | inst_beq | inst_bne | inst_j | inst_jal;
 
     //
-    assign R_type = inst_add | inst_addu | inst_sub | inst_subu | inst_or | inst_xor | inst_nor | inst_slt | inst_sltu | inst_sll | inst_srl | inst_sra | inst_sllv | inst_srlv
+    assign R_type = inst_add | inst_addu | inst_sub | inst_subu | inst_or | inst_xor | inst_nor | inst_slt | inst_sltu | inst_sll | inst_srl | inst_sra | inst_sllv | inst_srlv |
                     inst_srav | inst_jr;
     assign I_type = inst_addi | inst_addiu | inst_andi | inst_ori | inst_xori | inst_lui | inst_lw | inst_sw | inst_beq | inst_bne | inst_slti | inst_sltiu;
     assign J_type = inst_j | inst_jal;
@@ -269,7 +269,7 @@ module control_unit(
         SRA_inst,
         LUI_inst,
         JUMP_BRANCH_inst
-    }
+    };
 
     assign write_mem = inst_sw;
     assign write_regfile = inst_add | inst_addu | inst_sub | inst_subu | inst_add | inst_or | inst_xor |
@@ -285,11 +285,11 @@ module control_unit(
     assign rd_or_rt = inst_add | inst_addu | inst_sub | inst_subu | inst_and | inst_or | inst_xor | inst_nor |
                       inst_slt | inst_sltu | inst_sll | inst_srl | inst_sra | inst_sllv | inst_srlv | inst_srav; //1'b1 rd : 1'b0 rt
 
-    wire is_branch = rs_eq_rt & beq ? 1'b1 : (!rs_eq_rt & bne ? 1'b1 : 1'b0);
+    wire is_branch = rs_eq_rt & inst_beq ? 1'b1 : (!rs_eq_rt & inst_bne ? 1'b1 : 1'b0);
     assign bpc = pc + {16{inst[15], inst[15:0]}};
     wire is_jump = inst_jal | inst_j;
     assign jpc = {pc[31:28], inst[25:0], 2'b00}; //?
     wire is_jump_jr = inst_jr;
 
-    assign pcsource = is_branch ? 2'b11 : (is_jump ? 2'b10 : (is_jump_jr ? : 2'b01 : 2'b00));
+    assign pcsource = is_branch ? 2'b11 : (is_jump ? 2'b10 : (is_jump_jr ? 2'b01 : 2'b00));
 endmodule
