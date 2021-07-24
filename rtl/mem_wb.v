@@ -1,3 +1,5 @@
+`include "global_define.vh"
+`timescale 1ns / 1ps
 module mem_wb(
     input clk,
     input reset,

@@ -1,4 +1,5 @@
 `include "global_define.vh"
+`timescale 1ns / 1ps
 module ALU(
     input [14:0] ALUControl,
     input [31:0] da,

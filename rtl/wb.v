@@ -1,3 +1,5 @@
+`include "global_define.vh"
+`timescale 1ns / 1ps
 module wb(
     input [31:0] d1,
     input [31:0] d2,

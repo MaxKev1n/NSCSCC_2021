@@ -1,4 +1,5 @@
 `include "global_define.vh"
+`timescale 1ns / 1ps
 module id_exe(
     input clk,
     input reset,

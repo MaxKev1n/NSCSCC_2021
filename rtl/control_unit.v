@@ -1,3 +1,5 @@
+`include "global_define.vh"
+`timescale 1ns / 1ps
 module control_unit(
     input [31:0] inst,
     input [31:0] pc,
@@ -18,8 +20,8 @@ module control_unit(
     output shift,
     output sext,
     output rd_or_rt,
-    output fwda,
-    output fwdb,
+    output reg fwda,
+    output reg fwdb,
     output [31:0] bpc,
     output [31:0] jpc,
     output [1:0] pcsource,

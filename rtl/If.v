@@ -1,5 +1,7 @@
+`include "global_define.vh"
+`timescale 1ns / 1ps
 module If(
-    input [31:0] pc,
+    input [31:0] i_pc,
     input [1:0] pcsource,
     input [31:0] bpc,
     input [31:0] jpc,
@@ -9,8 +11,8 @@ module If(
     output [31:0] npc
 );
 
-    assign pc4 = pc + 32'd4;
+    assign pc4 = i_pc + 32'd4;
     mux4x32 MUX(.a0(pc4), .a1(jrpc), .a2(jpc), .a3(bpc), .s(pcsource), .res(npc));
-    //inst_rom
+    inst_rom ROM(.a(i_pc), .inst(inst));
 
 endmodule

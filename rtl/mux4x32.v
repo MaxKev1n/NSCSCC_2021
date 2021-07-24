@@ -1,3 +1,5 @@
+`include "global_define.vh"
+`timescale 1ns / 1ps
 module mux4x32(
     input [31:0] a0,
     input [31:0] a1,

@@ -1,3 +1,5 @@
+`include "global_define.vh"
+`timescale 1ns / 1ps
 module ID(
     input [31:0] i_inst,
     input clk,

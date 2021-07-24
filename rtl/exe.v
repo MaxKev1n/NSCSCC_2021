@@ -1,3 +1,5 @@
+`include "global_define.vh"
+`timescale 1ns / 1ps
 module exe(
     input jal,
     input aluimm,
@@ -6,10 +8,8 @@ module exe(
     input [31:0] da,
     input [31:0] db,
     input [31:0] imm,
-    input [4:0] rn,
     input [14:0] ALUControl,
 
-    output [4:0] ern,
     output [31:0] ea,
     output [31:0] eb
 );

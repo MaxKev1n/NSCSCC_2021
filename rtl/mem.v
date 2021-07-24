@@ -1,3 +1,5 @@
+`include "global_define.vh"
+`timescale 1ns / 1ps
 module mem(
     input [31:0] din,
     input [31:0] addr,

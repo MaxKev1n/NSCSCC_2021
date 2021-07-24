@@ -1,3 +1,5 @@
+`include "global_define.vh"
+`timescale 1ns / 1ps
 module regfile(
     input clk,
     input reset,
@@ -11,15 +13,15 @@ module regfile(
 );
 
     reg [31:0] Regfile[0:31];
+    integer i;
 
     always @(posedge clk) begin
         if(reset) begin
-            integer i;
             for(i = 1;i < 32;i = i + 1) begin
                 Regfile[i] <= 32'd0;
             end
-        end else if(ena & (addr != 5'd0)) begin
-            Reg[waddr] <= i_data;
+        end else if(ena & (waddr != 5'd0)) begin
+            Regfile[waddr] <= i_data;
         end
     end
 
