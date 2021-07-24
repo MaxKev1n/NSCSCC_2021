@@ -47,5 +47,6 @@ module ID(
 
     assign imm = sext ? {{16{i_inst[15]}}, i_inst[15:0]} : {16'd0, i_inst[15:0]};
     assign rn = rd_or_rt ? i_inst[15:11] : i_inst[20:16];
+    assign jrpc = da;
 
 endmodule

@@ -5,6 +5,8 @@ module control_unit(
     input [4:0] exe_reg,
     input [4:0] mem_reg,
     input wb_write_regfile,
+    input exe_mem_to_regfile,
+    input mem_mem_to_regfile,
 
     output write_mem,
     output write_regfile,
@@ -292,4 +294,8 @@ module control_unit(
     wire is_jump_jr = inst_jr;
 
     assign pcsource = is_branch ? 2'b11 : (is_jump ? 2'b10 : (is_jump_jr ? 2'b01 : 2'b00));
+
+    always @(*) begin
+        if()
+    end
 endmodule

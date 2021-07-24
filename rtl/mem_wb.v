@@ -7,11 +7,11 @@ module mem_wb(
     input [4:0] i_rn,
     input i_write_regfile,
     input i_mem_to_regfile,
-    output [31:0] o_d1,
-    output [31:0] o_d2,
-    output [4:0] o_rn,
-    output o_write_regfile,
-    output o_mem_to_regfile
+    output reg [31:0] o_d1,
+    output reg[31:0] o_d2,
+    output reg [4:0] o_rn,
+    output reg o_write_regfile,
+    output reg o_mem_to_regfile
 );
 
     always @(posedge clk) begin
