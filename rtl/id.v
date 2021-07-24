@@ -6,6 +6,10 @@ module ID(
     input [4:0] exe_reg,
     input [4:0] mem_reg,
     input wb_write_regfile,
+    input exe_mem_to_regfile,
+    input mem_mem_to_regfile,
+    input exe_write_regfile,
+    input mem_write_regfile,
     input [4:0] waddr,
     input [31:0] wdata,
 
@@ -24,7 +28,8 @@ module ID(
     output [31:0] jpc,
     output [31:0] jrpc,
     output [1:0] pcsource,
-    output [14:0] ALUControl
+    output [14:0] ALUControl,
+    output [7:0] mem_control
 );
     wire rs_eq_rt;
     wire rd_or_rt;
@@ -34,10 +39,12 @@ module ID(
     assign rs_eq_rt = qa == qb ? 1'b1 : 1'b0;
 
     control_unit CU(.inst(i_inst), .pc(i_pc), .rs_eq_rt(rs_eq_rt), .exe_reg(exe_reg), .mem_reg(mem_reg),
-                    .wb_write_regfile(wb_write_regfile), .write_mem(write_mem), .write_regfile(write_regfile),
+                    .wb_write_regfile(wb_write_regfile), .exe_mem_to_regfile(exe_mem_to_regfile), 
+                    .mem_mem_to_regfile(mem_mem_to_regfile), .exe_write_regfile(exe_write_regfile), 
+                    .mem_write_regfile(mem_write_regfile), .write_mem(write_mem), .write_regfile(write_regfile),
                     .mem_to_regfile(mem_to_regfile), .jal(jal), .aluimm(aluimm), .shift(shift), .sext(sext),
                     .rd_or_rt(rd_or_rt), .fwda(fwda), .fwdb(fwdb), .bpc(bpc), .jpc(jpc), .pcsource(pcsource),
-                    .ALUControl(ALUControl));
+                    .ALUControl(ALUControl), .mem_control(mem_control));
     
     regfile REGFILE(.clk(clk), .reset(reset), .raddr1(i_inst[25:21]), .raddr2(i_inst[20:16]), .waddr(waddr),
                     .i_data(wdata), .ena(wb_write_regfile), .o_output1(qa), .o_output2(qb));

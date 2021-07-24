@@ -15,6 +15,7 @@ module id_exe(
     input [31:0] i_imm,
     input [4:0] i_rn,
     input [14:0] i_ALUControl,
+    input [7:0] i_mem_control,
 
     output reg o_write_mem,
     output reg o_write_regfile,
@@ -27,7 +28,8 @@ module id_exe(
     output reg [31:0] o_db,
     output reg [31:0] o_imm,
     output reg [4:0] o_rn,
-    output reg [14:0] o_ALUControl
+    output reg [14:0] o_ALUControl,
+    output reg [7:0] o_mem_control
 );
 
     always @(posedge clk) begin
@@ -44,6 +46,7 @@ module id_exe(
         o_imm <= `ZeroWord;
         o_rn <= 5'b00000;
         o_ALUControl <= 15'd0;
+        o_mem_control <= 8'd0;
     end else if(stall[2] == `Stop && stall[3] == `NoStop) begin
         o_write_mem <= `ZeroBit;
         o_write_regfile <= `ZeroBit;
@@ -57,6 +60,7 @@ module id_exe(
         o_imm <= `ZeroWord;
         o_rn <= 5'b00000;
         o_ALUControl <= 15'd0;
+        o_mem_control <= 8'd0;
     end else if(stall[2] == `NoStop) begin
         o_write_mem <= i_write_mem;
         o_write_regfile <= i_write_regfile;
@@ -70,6 +74,7 @@ module id_exe(
         o_imm <= i_imm;
         o_rn <= i_rn;
         o_ALUControl <= i_ALUControl;
+        o_mem_control <= i_mem_control;
     end
     end
 

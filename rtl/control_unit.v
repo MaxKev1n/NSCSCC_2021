@@ -23,7 +23,8 @@ module control_unit(
     output [31:0] bpc,
     output [31:0] jpc,
     output [1:0] pcsource,
-    output [14:0] ALUControl
+    output [14:0] ALUControl,
+    output [7:0] mem_control
 );
 
     wire [5:0] op = inst[31:26];
@@ -296,6 +297,16 @@ module control_unit(
     wire is_jump_jr = inst_jr;
 
     assign pcsource = is_branch ? 2'b11 : (is_jump ? 2'b10 : (is_jump_jr ? 2'b01 : 2'b00));
+    assign mem_control = {
+        inst_lb,
+        inst_lbu,
+        inst_lh,
+        inst_lhu,
+        inst_lw,
+        inst_sb,
+        inst_sh,
+        inst_sw
+    };
 
     always @(*) begin
         fwda = 2'b00;
