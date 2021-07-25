@@ -7,8 +7,11 @@ module top(
     output [31:0] pc,
     output [31:0] inst,
     output [31:0] ALURes,
-    output [31:0] id_da,
-    output [31:0] id_db
+    output [31:0] id_exe_da,
+    output [31:0] id_exe_db,
+    output [31:0] id_exe_imm,
+    output [31:0] mem_wb_d1,
+    output [31:0] mem_wb_d2
 );
 
     wire [31:0] npc;
@@ -28,9 +31,8 @@ module top(
     wire mem_write_regfile;
     wire [4:0] waddr;
     wire [4:0] wdata;
-    wire [31:0] id_pc;
-    //wire [31:0] id_da;
-    //wire [31:0] id_db;
+    wire [31:0] id_da;
+    wire [31:0] id_db;
     wire [31:0] id_imm;
     wire [4:0] id_rn;
     wire id_write_mem;
@@ -76,14 +78,17 @@ module top(
     if_id IF_ID(.clk(clk), .reset(reset), .i_pc(pc4), .i_inst(inst), .stall(stall), .o_pc(if_id_pc), .o_inst(if_id_inst));
 
     ID ID(.i_inst(if_id_inst), .clk(clk), .reset(reset), .i_pc(if_id_pc), .exe_reg(exe_reg), .mem_reg(mem_reg),
-          .wb_write_regfile(wb_write_regfile), .exe_mem_to_regfile(exe_mem_to_regfile), .mem_mem_to_regfile(mem_mem_to_regfile),
-          .exe_write_regfile(exe_write_regfile), .mem_write_regfile(mem_write_regfile), .waddr(waddr), .wdata(wdata),
-          .o_pc(id_pc), .da(id_da), .db(id_db), .imm(id_imm), .rn(id_rn), .write_mem(id_write_mem), .write_regfile(id_write_regfile),
+          .exe_mem_to_regfile(exe_mem_to_regfile), .mem_mem_to_regfile(mem_mem_to_regfile),
+          .exe_write_regfile(exe_write_regfile), .mem_write_regfile(mem_write_regfile),
+          .imm(id_imm), .rn(id_rn), .write_mem(id_write_mem), .write_regfile(id_write_regfile),
           .mem_to_regfile(id_mem_to_regfile), .jal(id_jal), .aluimm(id_aluimm), .shift(id_shift), .bpc(bpc), .jpc(jpc), .jrpc(jrpc),
-          .pcsource(pcsource), .ALUControl(id_ALUControl), .mem_control(id_mem_control));
+          .pcsource(pcsource), .ALUControl(id_ALUControl), .mem_control(id_mem_control), .qa(id_da), .qb(id_db));
+
+    regfile REGFILE(.clk(clk), .reset(reset), .raddr1(if_id_inst[25:21]), .raddr2(if_id_inst[20:16]), .waddr(waddr),
+                    .i_data(wdata), .ena(wb_write_regfile), .o_output1(id_da), .o_output2(id_db));
     
     id_exe ID_EXE(.clk(clk), .reset(reset), .stall(stall), .i_write_mem(id_write_mem), .i_write_regfile(id_write_regfile), .i_jal(id_jal),
-                  .i_aluimm(id_aluimm), .i_shift(id_shift), .i_pc(id_pc), .i_da(id_pc), .i_db(id_db), .i_imm(id_imm), .i_rn(id_rn),
+                  .i_aluimm(id_aluimm), .i_shift(id_shift), .i_pc(if_id_pc), .i_da(id_da), .i_db(id_db), .i_imm(id_imm), .i_rn(id_rn),
                   .i_ALUControl(id_ALUControl), .i_mem_control(id_mem_control), .o_write_mem(id_exe_write_mem),
                   .o_write_regfile(id_exe_write_regfile), .o_mem_to_regfile(id_exe_mem_to_regfile), .o_jal(id_exe_jal), .o_aluimm(id_exe_aluimm),
                   .o_shift(id_exe_shift), .o_pc(id_exe_pc), .o_da(id_exe_da), .o_db(id_exe_db), .o_imm(id_exe_imm), .o_rn(exe_reg),

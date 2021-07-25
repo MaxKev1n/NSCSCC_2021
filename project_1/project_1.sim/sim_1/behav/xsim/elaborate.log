@@ -4,10 +4,14 @@ Running: D:/Xilinx/Vivado/2019.2/bin/unwrapped/win64.o/xelab.exe -wto b9565a0f93
 Using 2 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
-WARNING: [VRFC 10-3091] actual bit length 5 differs from formal bit length 32 for port 'wdata' [E:/NSCSCC/NSCSCC_2021/rtl/top.v:80]
-WARNING: [VRFC 10-3091] actual bit length 2 differs from formal bit length 1 for port 'fwda' [E:/NSCSCC/NSCSCC_2021/rtl/ID.v:48]
-WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 5 for port 'i_rn' [E:/NSCSCC/NSCSCC_2021/rtl/top.v:104]
-WARNING: [VRFC 10-3091] actual bit length 5 differs from formal bit length 32 for port 'dataout' [E:/NSCSCC/NSCSCC_2021/rtl/top.v:108]
+WARNING: [VRFC 10-3091] actual bit length 2 differs from formal bit length 1 for port 'fwda' [E:/NSCSCC/NSCSCC_2021/rtl/ID.v:44]
+WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 5 for port 'waddr' [E:/NSCSCC/NSCSCC_2021/rtl/ID.v:47]
+WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 32 for port 'i_data' [E:/NSCSCC/NSCSCC_2021/rtl/ID.v:48]
+WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 5 for port 'i_rn' [E:/NSCSCC/NSCSCC_2021/rtl/top.v:109]
+WARNING: [VRFC 10-3091] actual bit length 5 differs from formal bit length 32 for port 'dataout' [E:/NSCSCC/NSCSCC_2021/rtl/top.v:113]
+WARNING: [VRFC 10-3091] actual bit length 5 differs from formal bit length 32 for port 'i_data' [E:/NSCSCC/NSCSCC_2021/rtl/top.v:88]
+WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 32 for port 'res' [E:/NSCSCC/NSCSCC_2021/rtl/ID.v:50]
+WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 32 for port 'res' [E:/NSCSCC/NSCSCC_2021/rtl/ID.v:51]
 Completed static elaboration
 Starting simulation data flow analysis
 Completed simulation data flow analysis
@@ -21,7 +25,6 @@ Compiling module xil_defaultlib.control_unit
 Compiling module xil_defaultlib.regfile
 Compiling module xil_defaultlib.ID
 Compiling module xil_defaultlib.id_exe
-Compiling module xil_defaultlib.ALU
 Compiling module xil_defaultlib.exe
 Compiling module xil_defaultlib.exe_mem
 Compiling module xil_defaultlib.mem

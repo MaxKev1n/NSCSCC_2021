@@ -17,14 +17,60 @@ module exe(
     wire [31:0] pc8;
     wire [31:0] ALU1;
     wire [31:0] ALU2;
-    wire [31:0] ALURes;
+    reg [31:0] dout;
 
     assign ALU1 = shift ? imm : da;
     assign ALU2 = aluimm ? imm : db;
-    assign pc8 = pc + 4;
+    assign pc8 = pc + 32'd4;
 
-    ALU alu(.ALUControl(ALUControl), .da(da), .db(db), .dout(ALURes));
-    assign ea = jal ? pc8 : ALURes;
+    assign ea = jal ? pc8 : dout;
     assign eb = db;
+
+    wire [31:0] complement;
+    wire [31:0] res_sum;
+    wire [31:0] a_compare_b;
+
+    assign complement = (ALUControl == `SLT || ALUControl == `SUB || ALUControl == `SUBU) ? (~ALU2 + 1) : ALU2;
+    assign res_sum = ALU1 + complement;
+    assign a_compare_b = (ALUControl == `SLT) ? ((ALU1[31] && db[31] && res_sum[31]) || (ALU1[31] && !ALU2[31]) || (!ALU1[31] && !ALU2[31] && res_sum[31])) : (ALU1 < ALU2);
+    
+    always @(*) begin
+        case(ALUControl)
+            `ADD, `ADDU, `SUB, `SUBU : begin
+                dout = res_sum;
+            end
+            `AND : begin
+                dout = ALU1 & ALU2;
+            end
+            `OR : begin
+                dout = ALU1 | ALU2;
+            end
+            `XOR : begin
+                dout = ALU1 ^ ALU2;
+            end
+            `NOR : begin
+                dout = ~(ALU1 | ALU2);
+            end
+            `SLT, `SLTU : begin
+                dout = a_compare_b;
+            end
+            `SLL : begin
+                dout = ALU2 << ALU1[4:0];
+            end
+            `SRL : begin
+                dout = ALU2 >> ALU1[4:0];
+            end
+            `SRA : begin
+                dout = ALU2 >>> ALU1[4:0];
+            end
+            `LUI : begin
+                dout = {ALU2[15:0], 16'd0};
+            end
+            default : begin
+                dout = `ZeroWord;
+            end
+        endcase
+    end
+
 
 endmodule

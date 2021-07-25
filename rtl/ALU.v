@@ -12,11 +12,11 @@ module ALU(
     wire [31:0] res_sum;
     wire [31:0] a_compare_b;
 
-    assign complement = (ALUControl == `SLT || ALUControl == `SUB || ALUControl == `SUBU) ? (~da + 1) : da;
+    assign complement = (ALUControl == `SLT || ALUControl == `SUB || ALUControl == `SUBU) ? (~db + 1) : db;
     assign res_sum = da + complement;
     assign a_compare_b = (ALUControl == `SLT) ? ((da[31] && db[31] && res_sum[31]) || (da[31] && !db[31]) || (!da[31] && !db[31] && res_sum[31])) : (da < db);
     
-    always @(*) begin
+    always @(ALUControl) begin
         case(ALUControl)
             `ADD, `ADDU, `SUB, `SUBU : begin
                 dout = res_sum;
@@ -49,7 +49,7 @@ module ALU(
                 dout = {db[15:0], 16'd0};
             end
             default : begin
-                dout = `ZeroWord;
+                dout = 32'd9;
             end
         endcase
     end

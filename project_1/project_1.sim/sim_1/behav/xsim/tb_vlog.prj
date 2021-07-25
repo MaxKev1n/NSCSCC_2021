@@ -1,7 +1,6 @@
 # compile verilog/system verilog design source files
 verilog xil_defaultlib  --include "../../../../../rtl" \
 "../../../../project_1.srcs/sources_1/ip/data_ram/sim/data_ram.v" \
-"../../../../../rtl/ALU.v" \
 "../../../../../rtl/ID.v" \
 "../../../../../rtl/If.v" \
 "../../../../../rtl/control_unit.v" \

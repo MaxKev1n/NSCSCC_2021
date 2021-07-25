@@ -29,17 +29,21 @@ module tb(
     wire [31:0] pc;
     wire [31:0] inst;
     wire [31:0] ALURes;
-    wire [31:0] id_da;
-    wire [31:0] id_db;
+    wire [31:0] id_exe_da;
+    wire [31:0] id_exe_db;
+    wire [31:0] id_exe_imm;
+    wire [31:0] mem_wb_d1;
+    wire [31:0] mem_wb_d2;
 
-    top TOP(.clk(clk), .reset(reset), .stall(6'b000000), .pc(pc), .inst(inst), .ALURes(ALURes), .id_da(id_da), .id_db(id_db));
+    top TOP(.clk(clk), .reset(reset), .stall(6'b000000), .pc(pc), .inst(inst), .ALURes(ALURes), .id_exe_da(id_exe_da), .id_exe_db(id_exe_db), .id_exe_imm(id_exe_imm),
+            .mem_wb_d1(mem_wb_d1), .mem_wb_d2(mem_wb_d2));
 
     initial begin
         reset = 1'b0;
         clk = 1'b0;
 
-        #10 reset = 1'b1;
-        #10 reset = 1'b0;
+        #5 reset = 1'b1;
+        #6 reset = 1'b0;
     end
 
     always begin
