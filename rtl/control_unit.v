@@ -6,7 +6,6 @@ module control_unit(
     input rs_eq_rt,
     input [4:0] exe_reg,
     input [4:0] mem_reg,
-    input wb_write_regfile,
     input exe_mem_to_regfile,
     input mem_mem_to_regfile,
     input exe_write_regfile,

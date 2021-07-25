@@ -6,13 +6,13 @@ module inst_rom(
     );
 
     wire [31:0] rom[0:31];
-    assign rom[5'h00] =  32'h20a50064;
+    /*assign rom[5'h00] =  32'h20a50064;
     assign rom[5'h01] =  32'h20060096;
     assign rom[5'h02] =  32'h00a63820;
     assign rom[5'h03] =  32'h20a50064;
     assign rom[5'h04] =  32'h20060096;
-    assign rom[5'h05] =  32'h00a63820;
-    /*assign rom[5'h00] = 32'h3c010000;
+    assign rom[5'h05] =  32'h00a63820;*/
+    assign rom[5'h00] = 32'h3c010000;
     assign rom[5'h01] = 32'h34240050;
     assign rom[5'h02] = 32'h20050004;
     assign rom[5'h03] = 32'h0c000018;
@@ -44,7 +44,7 @@ module inst_rom(
     assign rom[5'h1D] = 32'h14a0fffb;
     assign rom[5'h1E] = 32'h00081000;
     assign rom[5'h1F] = 32'h03e00008;
-    assign rom[5'h00] = 32'h8c890000;
+    /*assign rom[5'h00] = 32'h8c890000;
     assign rom[5'h01] = 32'h01294020*/
     assign inst = rom[a[6:2]];
 

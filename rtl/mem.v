@@ -8,7 +8,7 @@ module mem(
     output reg [3:0] store_control
 );
 
-    always @(mem_control) begin
+    always @(*) begin
         case(mem_control)
             `MEM_LB : begin
                 case(addr[1:0])

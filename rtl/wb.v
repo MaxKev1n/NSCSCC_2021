@@ -7,6 +7,6 @@ module wb(
     output [31:0] dataout
 );
 
-    assign dataout = mem_to_regfile ? d2 : d1;
+    assign dataout = mem_to_regfile ? d1 : d2;
 
 endmodule

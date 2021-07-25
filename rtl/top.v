@@ -5,13 +5,20 @@ module top(
     input reset,
     input [5:0] stall,
     output [31:0] pc,
+    output [31:0] pc4,
     output [31:0] inst,
+    output [31:0] if_id_inst,
     output [31:0] ALURes,
-    output [31:0] id_exe_da,
-    output [31:0] id_exe_db,
+    output [31:0] id_da,
+    output [31:0] id_db,
     output [31:0] id_exe_imm,
     output [31:0] mem_wb_d1,
-    output [31:0] mem_wb_d2
+    output [31:0] mem_wb_d2,
+    output [31:0] wdata,
+    output [4:0] waddr,
+    output wb_write_regfile,
+    output [31:0] data_ram_out,
+    output [31:0] exe_mem_da
 );
 
     wire [31:0] npc;
@@ -30,7 +37,7 @@ module top(
     wire exe_write_regfile;
     wire mem_write_regfile;
     wire [4:0] waddr;
-    wire [4:0] wdata;
+    wire [31:0] wdata;
     wire [31:0] id_da;
     wire [31:0] id_db;
     wire [31:0] id_imm;
@@ -68,7 +75,6 @@ module top(
     wire [31:0] data_ram_out;
     wire [31:0] mem_wb_d1;
     wire [31:0] mem_wb_d2;
-    wire mem_wb_write_regfile;
     wire mem_wb_mem_to_regfile;
 
     pc PC(.clk(clk), .reset(reset), .stall(stall), .i_pc(npc), .o_pc(pc));
@@ -88,8 +94,8 @@ module top(
                     .i_data(wdata), .ena(wb_write_regfile), .o_output1(id_da), .o_output2(id_db));
     
     id_exe ID_EXE(.clk(clk), .reset(reset), .stall(stall), .i_write_mem(id_write_mem), .i_write_regfile(id_write_regfile), .i_jal(id_jal),
-                  .i_aluimm(id_aluimm), .i_shift(id_shift), .i_pc(if_id_pc), .i_da(id_da), .i_db(id_db), .i_imm(id_imm), .i_rn(id_rn),
-                  .i_ALUControl(id_ALUControl), .i_mem_control(id_mem_control), .o_write_mem(id_exe_write_mem),
+                  .i_mem_to_regfile(id_mem_to_regfile), .i_aluimm(id_aluimm), .i_shift(id_shift), .i_pc(if_id_pc), .i_da(id_da), .i_db(id_db), .i_imm(id_imm),
+                  .i_rn(id_rn), .i_ALUControl(id_ALUControl), .i_mem_control(id_mem_control), .o_write_mem(id_exe_write_mem),
                   .o_write_regfile(id_exe_write_regfile), .o_mem_to_regfile(id_exe_mem_to_regfile), .o_jal(id_exe_jal), .o_aluimm(id_exe_aluimm),
                   .o_shift(id_exe_shift), .o_pc(id_exe_pc), .o_da(id_exe_da), .o_db(id_exe_db), .o_imm(id_exe_imm), .o_rn(exe_reg),
                   .o_ALUControl(id_exe_ALUControl), .o_mem_control(id_exe_mem_control));
@@ -106,9 +112,9 @@ module top(
 
     data_ram DATA_RAM(.clka(clk), .rsta(reset), .ena(1'b1), .wea(store_control), .addra(exe_mem_da), .dina(exe_mem_db), .douta(data_ram_out));
 
-    mem_wb MEM_WB(.clk(clk), .reset(reset), .stall(stall), .i_d1(mem_dout), .i_d2(exe_mem_da), .i_rn(exe_mem_rn),
+    mem_wb MEM_WB(.clk(clk), .reset(reset), .stall(stall), .i_d1(mem_dout), .i_d2(exe_mem_da), .i_rn(mem_reg),
                   .i_write_regfile(exe_mem_write_regfile), .i_mem_to_regfile(exe_mem_mem_to_regfile), .o_d1(mem_wb_d1), .o_d2(mem_wb_d2),
-                  .o_rn(waddr), .o_write_regfile(mem_wb_write_regfile), .o_mem_to_regfile(mem_wb_mem_to_regfile));
+                  .o_rn(waddr), .o_write_regfile(wb_write_regfile), .o_mem_to_regfile(mem_wb_mem_to_regfile));
 
     wb WB(.d1(mem_wb_d1), .d2(mem_wb_d2), .mem_to_regfile(mem_wb_mem_to_regfile), .dataout(wdata));
 

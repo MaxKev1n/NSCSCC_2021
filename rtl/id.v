@@ -37,15 +37,12 @@ module ID(
     assign rs_eq_rt = qa == qb ? 1'b1 : 1'b0;
 
     control_unit CU(.inst(i_inst), .pc(i_pc), .rs_eq_rt(rs_eq_rt), .exe_reg(exe_reg), .mem_reg(mem_reg),
-                    .wb_write_regfile(wb_write_regfile), .exe_mem_to_regfile(exe_mem_to_regfile), 
+                    .exe_mem_to_regfile(exe_mem_to_regfile), 
                     .mem_mem_to_regfile(mem_mem_to_regfile), .exe_write_regfile(exe_write_regfile), 
                     .mem_write_regfile(mem_write_regfile), .write_mem(write_mem), .write_regfile(write_regfile),
                     .mem_to_regfile(mem_to_regfile), .jal(jal), .aluimm(aluimm), .shift(shift), .sext(sext),
                     .rd_or_rt(rd_or_rt), .fwda(fwda), .fwdb(fwdb), .bpc(bpc), .jpc(jpc), .pcsource(pcsource),
                     .ALUControl(ALUControl), .mem_control(mem_control));
-    
-    regfile REGFILE(.clk(clk), .reset(reset), .raddr1(i_inst[25:21]), .raddr2(i_inst[20:16]), .waddr(waddr),
-                    .i_data(wdata), .ena(wb_write_regfile), .o_output1(qa), .o_output2(qb));
 
     mux4x32 MUX1(.a0(qa), .a1(), .a2(), .a3(), .s(2'b00), .res(da));
     mux4x32 MUX2(.a0(qb), .a1(), .a2(), .a3(), .s(2'b00), .res(db));

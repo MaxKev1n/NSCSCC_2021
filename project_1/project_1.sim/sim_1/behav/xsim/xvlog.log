@@ -3,20 +3,17 @@ INFO: [VRFC 10-311] analyzing module data_ram
 INFO: [VRFC 10-2263] Analyzing Verilog file "E:/NSCSCC/NSCSCC_2021/rtl/ID.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module ID
 WARNING: [VRFC 10-3676] redeclaration of ansi port 'qa' is not allowed [E:/NSCSCC/NSCSCC_2021/rtl/ID.v:35]
-INFO: [VRFC 10-2458] undeclared symbol wb_write_regfile, assumed default net type wire [E:/NSCSCC/NSCSCC_2021/rtl/ID.v:40]
 INFO: [VRFC 10-2458] undeclared symbol sext, assumed default net type wire [E:/NSCSCC/NSCSCC_2021/rtl/ID.v:43]
-INFO: [VRFC 10-2458] undeclared symbol waddr, assumed default net type wire [E:/NSCSCC/NSCSCC_2021/rtl/ID.v:47]
-INFO: [VRFC 10-2458] undeclared symbol wdata, assumed default net type wire [E:/NSCSCC/NSCSCC_2021/rtl/ID.v:48]
-INFO: [VRFC 10-2458] undeclared symbol da, assumed default net type wire [E:/NSCSCC/NSCSCC_2021/rtl/ID.v:50]
-INFO: [VRFC 10-2458] undeclared symbol db, assumed default net type wire [E:/NSCSCC/NSCSCC_2021/rtl/ID.v:51]
+INFO: [VRFC 10-2458] undeclared symbol da, assumed default net type wire [E:/NSCSCC/NSCSCC_2021/rtl/ID.v:47]
+INFO: [VRFC 10-2458] undeclared symbol db, assumed default net type wire [E:/NSCSCC/NSCSCC_2021/rtl/ID.v:48]
 INFO: [VRFC 10-2263] Analyzing Verilog file "E:/NSCSCC/NSCSCC_2021/rtl/If.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module If
 INFO: [VRFC 10-2263] Analyzing Verilog file "E:/NSCSCC/NSCSCC_2021/rtl/control_unit.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module control_unit
-WARNING: [VRFC 10-986] literal value truncated to fit in 6 bits [E:/NSCSCC/NSCSCC_2021/rtl/control_unit.v:222]
-INFO: [VRFC 10-2458] undeclared symbol R_type, assumed default net type wire [E:/NSCSCC/NSCSCC_2021/rtl/control_unit.v:258]
-INFO: [VRFC 10-2458] undeclared symbol I_type, assumed default net type wire [E:/NSCSCC/NSCSCC_2021/rtl/control_unit.v:260]
-INFO: [VRFC 10-2458] undeclared symbol J_type, assumed default net type wire [E:/NSCSCC/NSCSCC_2021/rtl/control_unit.v:261]
+WARNING: [VRFC 10-986] literal value truncated to fit in 6 bits [E:/NSCSCC/NSCSCC_2021/rtl/control_unit.v:221]
+INFO: [VRFC 10-2458] undeclared symbol R_type, assumed default net type wire [E:/NSCSCC/NSCSCC_2021/rtl/control_unit.v:257]
+INFO: [VRFC 10-2458] undeclared symbol I_type, assumed default net type wire [E:/NSCSCC/NSCSCC_2021/rtl/control_unit.v:259]
+INFO: [VRFC 10-2458] undeclared symbol J_type, assumed default net type wire [E:/NSCSCC/NSCSCC_2021/rtl/control_unit.v:260]
 INFO: [VRFC 10-2263] Analyzing Verilog file "E:/NSCSCC/NSCSCC_2021/rtl/exe.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module exe
 INFO: [VRFC 10-2263] Analyzing Verilog file "E:/NSCSCC/NSCSCC_2021/rtl/exe_mem.v" into library xil_defaultlib
@@ -39,12 +36,18 @@ INFO: [VRFC 10-2263] Analyzing Verilog file "E:/NSCSCC/NSCSCC_2021/rtl/regfile.v
 INFO: [VRFC 10-311] analyzing module regfile
 INFO: [VRFC 10-2263] Analyzing Verilog file "E:/NSCSCC/NSCSCC_2021/rtl/top.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module top
-WARNING: [VRFC 10-3676] redeclaration of ansi port 'id_exe_da' is not allowed [E:/NSCSCC/NSCSCC_2021/rtl/top.v:53]
-WARNING: [VRFC 10-3676] redeclaration of ansi port 'id_exe_db' is not allowed [E:/NSCSCC/NSCSCC_2021/rtl/top.v:54]
-WARNING: [VRFC 10-3676] redeclaration of ansi port 'id_exe_imm' is not allowed [E:/NSCSCC/NSCSCC_2021/rtl/top.v:55]
-WARNING: [VRFC 10-3676] redeclaration of ansi port 'mem_wb_d1' is not allowed [E:/NSCSCC/NSCSCC_2021/rtl/top.v:69]
-WARNING: [VRFC 10-3676] redeclaration of ansi port 'mem_wb_d2' is not allowed [E:/NSCSCC/NSCSCC_2021/rtl/top.v:70]
-INFO: [VRFC 10-2458] undeclared symbol exe_mem_rn, assumed default net type wire [E:/NSCSCC/NSCSCC_2021/rtl/top.v:109]
+WARNING: [VRFC 10-3676] redeclaration of ansi port 'pc4' is not allowed [E:/NSCSCC/NSCSCC_2021/rtl/top.v:29]
+WARNING: [VRFC 10-3676] redeclaration of ansi port 'if_id_inst' is not allowed [E:/NSCSCC/NSCSCC_2021/rtl/top.v:31]
+WARNING: [VRFC 10-3676] redeclaration of ansi port 'wb_write_regfile' is not allowed [E:/NSCSCC/NSCSCC_2021/rtl/top.v:34]
+WARNING: [VRFC 10-3676] redeclaration of ansi port 'waddr' is not allowed [E:/NSCSCC/NSCSCC_2021/rtl/top.v:39]
+WARNING: [VRFC 10-3676] redeclaration of ansi port 'wdata' is not allowed [E:/NSCSCC/NSCSCC_2021/rtl/top.v:40]
+WARNING: [VRFC 10-3676] redeclaration of ansi port 'id_da' is not allowed [E:/NSCSCC/NSCSCC_2021/rtl/top.v:41]
+WARNING: [VRFC 10-3676] redeclaration of ansi port 'id_db' is not allowed [E:/NSCSCC/NSCSCC_2021/rtl/top.v:42]
+WARNING: [VRFC 10-3676] redeclaration of ansi port 'id_exe_imm' is not allowed [E:/NSCSCC/NSCSCC_2021/rtl/top.v:62]
+WARNING: [VRFC 10-3676] redeclaration of ansi port 'exe_mem_da' is not allowed [E:/NSCSCC/NSCSCC_2021/rtl/top.v:70]
+WARNING: [VRFC 10-3676] redeclaration of ansi port 'data_ram_out' is not allowed [E:/NSCSCC/NSCSCC_2021/rtl/top.v:75]
+WARNING: [VRFC 10-3676] redeclaration of ansi port 'mem_wb_d1' is not allowed [E:/NSCSCC/NSCSCC_2021/rtl/top.v:76]
+WARNING: [VRFC 10-3676] redeclaration of ansi port 'mem_wb_d2' is not allowed [E:/NSCSCC/NSCSCC_2021/rtl/top.v:77]
 INFO: [VRFC 10-2263] Analyzing Verilog file "E:/NSCSCC/NSCSCC_2021/rtl/wb.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module wb
 INFO: [VRFC 10-2263] Analyzing Verilog file "E:/NSCSCC/NSCSCC_2021/project_1/project_1.srcs/sim_1/new/tb.v" into library xil_defaultlib
