@@ -1,6 +1,7 @@
 # compile verilog/system verilog design source files
 verilog xil_defaultlib  --include "../../../../../rtl" \
 "../../../../project_1.srcs/sources_1/ip/data_ram/sim/data_ram.v" \
+"../../../../project_1.srcs/sources_1/ip/inst_rom/sim/inst_rom.v" \
 "../../../../../rtl/ID.v" \
 "../../../../../rtl/If.v" \
 "../../../../../rtl/control_unit.v" \
@@ -8,7 +9,6 @@ verilog xil_defaultlib  --include "../../../../../rtl" \
 "../../../../../rtl/exe_mem.v" \
 "../../../../../rtl/id_exe.v" \
 "../../../../../rtl/if_id.v" \
-"../../../../../rtl/inst_rom.v" \
 "../../../../../rtl/mem.v" \
 "../../../../../rtl/mem_wb.v" \
 "../../../../../rtl/mux4x32.v" \

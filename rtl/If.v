@@ -13,6 +13,6 @@ module If(
 
     assign pc4 = i_pc + 32'd4;
     mux4x32 MUX(.a0(pc4), .a1(jrpc), .a2(jpc), .a3(bpc), .s(pcsource), .res(npc));
-    inst_rom ROM(.a(i_pc), .inst(inst));
+    inst_rom ROM(.a(i_pc[7:2]), .spo(inst));
 
 endmodule
