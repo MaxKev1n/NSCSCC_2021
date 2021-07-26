@@ -41,10 +41,13 @@ module tb(
     wire wb_write_regfile;
     wire [31:0] data_ram_out;
     wire [31:0] exe_mem_da;
+    wire [1:0] pcsource;
+    wire [31:0] bpc;
 
 
     top TOP(.clk(clk), .reset(reset), .stall(6'b000000), .pc(pc), .pc4(pc4), .inst(inst), .if_id_inst(if_id_inst), .ALURes(ALURes), .id_da(id_da), .id_db(id_db), .id_exe_imm(id_exe_imm),
-            .mem_wb_d1(mem_wb_d1), .mem_wb_d2(mem_wb_d2), .wdata(wdata), .waddr(waddr), .wb_write_regfile(wb_write_regfile), .data_ram_out(data_ram_out), .exe_mem_da(exe_mem_da));
+            .mem_wb_d1(mem_wb_d1), .mem_wb_d2(mem_wb_d2), .wdata(wdata), .waddr(waddr), .wb_write_regfile(wb_write_regfile), .data_ram_out(data_ram_out), .exe_mem_da(exe_mem_da),
+            .pcsource(pcsource), .bpc(bpc));
 
     initial begin
         reset = 1'b0;

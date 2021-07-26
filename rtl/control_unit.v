@@ -309,7 +309,7 @@ module control_unit(
                       inst_mfhi | inst_mflo; //1'b1 rd : 1'b0 rt
 
     wire is_branch = rs_eq_rt & inst_beq ? 1'b1 : (!rs_eq_rt & inst_bne ? 1'b1 : 1'b0);
-    assign bpc = pc + {16{inst[15], inst[15:0]}};
+    assign bpc = pc + {{14{inst[15]}}, inst[15:0], 2'b00};
     wire is_jump = inst_jal | inst_j;
     assign jpc = {pc[31:28], inst[25:0], 2'b00}; //?
     wire is_jump_jr = inst_jr;

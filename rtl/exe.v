@@ -25,16 +25,16 @@ module exe(
     wire [31:0] ALU1;
     wire [31:0] ALU2;
     reg [31:0] dout;
-    reg s_axis_divisor_tvalid;
-    reg s_axis_divisor_tready;
-    reg s_axis_dividend_tvalid;
-    reg s_axis_dividend_tready;
-    reg m_axis_dout_tvalid;
-    reg s_axis_divisor_tvalid_u;
-    reg s_axis_divisor_tready_u;
-    reg s_axis_dividend_tvalid_u;
-    reg s_axis_dividend_tready_u;
-    reg m_axis_dout_tvalid_u;
+    wire s_axis_divisor_tvalid;
+    wire s_axis_divisor_tready;
+    wire s_axis_dividend_tvalid;
+    wire s_axis_dividend_tready;
+    wire m_axis_dout_tvalid;
+    wire s_axis_divisor_tvalid_u;
+    wire s_axis_divisor_tready_u;
+    wire s_axis_dividend_tvalid_u;
+    wire s_axis_dividend_tready_u;
+    wire m_axis_dout_tvalid_u;
 
     assign ALU1 = shift ? imm : da;
     assign ALU2 = aluimm ? imm : db;
@@ -57,6 +57,10 @@ module exe(
     assign a_compare_b = (ALUControl == `SLT) ? ((ALU1[31] && db[31] && res_sum[31]) || (ALU1[31] && !ALU2[31]) || (!ALU1[31] && !ALU2[31] && res_sum[31])) : (ALU1 < ALU2);
     assign write_hi = (ALUControl == `MTHI) ? 1'b1 : 1'b0;
     assign write_lo = (ALUControl == `MTLO) ? 1'b1 : 1'b0;
+    assign s_axis_dividend_tvalid_u = (s_axis_dividend_tready_u == 1'b0 && s_axis_divisor_tready_u ==1'b0) ? 1'b0 : (ALUControl == `DIVU ? 1'b1 : s_axis_dividend_tvalid_u);
+    assign s_axis_divisor_tvalid_u = (s_axis_dividend_tready_u == 1'b0 && s_axis_divisor_tready_u ==1'b0) ? 1'b0 : (ALUControl == `DIVU ? 1'b1 : s_axis_divisor_tvalid_u);
+    assign s_axis_dividend_tvalid = (s_axis_dividend_tready == 1'b0 && s_axis_divisor_tready ==1'b0) ? 1'b0 : (ALUControl == `DIV ? 1'b1 : s_axis_dividend_tvalid);
+    assign s_axis_divisor_tvalid = (s_axis_dividend_tready == 1'b0 && s_axis_divisor_tready ==1'b0) ? 1'b0 : (ALUControl == `DIV ? 1'b1 : s_axis_divisor_tvalid);
 
     unsigned_multiplier UM(.CLK(1'b1), .A({1'b0, {ALU1[31:0]}}), .B({1'b0, {ALU2[31:0]}}), .P(res_multu));
     signed_multiplier SM(.CLK(1'b1), .A({{ALU1[31]}, {ALU1[31:0]}}), .B({{ALU2[31]}, {ALU2[31:0]}}), .P(res_mult));
@@ -111,31 +115,19 @@ module exe(
                 if(m_axis_dout_tvalid == 1'b1) begin
                     hi = res_div[31:0];
                     lo = res_div[63:32];
-                end else if(s_axis_dividend_tready && s_axis_divisor_tready) begin
-                    s_axis_dividend_tvalid = 1'b0;
-                    s_axis_divisor_tvalid = 1'b0;
-                end else begin
-                    s_axis_dividend_tvalid = 1'b1;
-                    s_axis_divisor_tvalid = 1'b1;
                 end
             end
             `DIVU : begin
                 if(m_axis_dout_tvalid_u == 1'b1) begin
                     hi = res_div_u[31:0];
                     lo = res_div_u[63:32];
-                end else if(s_axis_dividend_tready_u && s_axis_divisor_tready_u) begin
-                    s_axis_dividend_tvalid_u = 1'b0;
-                    s_axis_divisor_tvalid_u = 1'b0;
-                end else begin
-                    s_axis_dividend_tvalid_u = 1'b1;
-                    s_axis_divisor_tvalid_u = 1'b1;
                 end
             end
             `MFHI : begin
-                hi = i_hi;
+                dout = i_hi;
             end
             `MFLO : begin
-                lo = i_lo;
+                dout = i_lo;
             end
             `MTHI : begin
                 hi = da;

@@ -14,6 +14,7 @@ verilog xil_defaultlib  --include "../../../../../rtl" \
 "../../../../../rtl/mux4x32.v" \
 "../../../../../rtl/pc.v" \
 "../../../../../rtl/regfile.v" \
+"../../../../../rtl/regfile_hilo.v" \
 "../../../../../rtl/top.v" \
 "../../../../../rtl/wb.v" \
 "../../../../project_1.srcs/sim_1/new/tb.v" \

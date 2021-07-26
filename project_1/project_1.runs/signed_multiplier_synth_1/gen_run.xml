@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GenRun Id="signed_multiplier_synth_1" LaunchPart="xc7a200tfbg676-2" LaunchTime="1627261315">
   <File Type="PA-TCL" Name="signed_multiplier.tcl"/>
-  <File Type="RDS-PROPCONSTRS" Name="signed_multiplier_drc_synth.rpt"/>
   <File Type="REPORTS-TCL" Name="signed_multiplier_reports.tcl"/>
   <File Type="RDS-RDS" Name="signed_multiplier.vds"/>
   <File Type="RDS-UTIL" Name="signed_multiplier_utilization_synth.rpt"/>
   <File Type="RDS-UTIL-PB" Name="signed_multiplier_utilization_synth.pb"/>
   <File Type="RDS-DCP" Name="signed_multiplier.dcp"/>
-  <File Type="VDS-TIMINGSUMMARY" Name="signed_multiplier_timing_summary_synth.rpt"/>
-  <File Type="VDS-TIMING-PB" Name="signed_multiplier_timing_summary_synth.pb"/>
   <FileSet Name="sources" Type="BlockSrcs" RelSrcDir="$PSRCDIR/signed_multiplier">
     <File Path="$PSRCDIR/sources_1/ip/signed_multiplier/signed_multiplier.xci">
       <FileInfo>
@@ -42,9 +39,7 @@
     </Config>
   </FileSet>
   <Strategy Version="1" Minor="2">
-    <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2019">
-      <Desc>Vivado Synthesis Defaults</Desc>
-    </StratHandle>
+    <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2019"/>
     <Step Id="synth_design"/>
   </Strategy>
 </GenRun>

@@ -13,6 +13,9 @@ module ID(
     input mem_write_regfile,
     input [31:0] qa,
     input [31:0] qb,
+    input [31:0] ALUres,
+    input [31:0] exe_mem_data,
+    input [31:0] mem_data,
 
     output [31:0] imm,
     output [4:0] rn,
@@ -44,8 +47,8 @@ module ID(
                     .rd_or_rt(rd_or_rt), .fwda(fwda), .fwdb(fwdb), .bpc(bpc), .jpc(jpc), .pcsource(pcsource),
                     .ALUControl(ALUControl), .mem_control(mem_control));
 
-    mux4x32 MUX1(.a0(qa), .a1(), .a2(), .a3(), .s(2'b00), .res(da));
-    mux4x32 MUX2(.a0(qb), .a1(), .a2(), .a3(), .s(2'b00), .res(db));
+    mux4x32 MUX1(.a0(qa), .a1(ALUres), .a2(exe_mem_data), .a3(mem_data), .s(fwda), .res(da));
+    mux4x32 MUX2(.a0(qb), .a1(ALUres), .a2(exe_mem_data), .a3(mem_data), .s(fwdb), .res(db));
 
     assign imm = sext ? {{16{i_inst[15]}}, i_inst[15:0]} : {16'd0, i_inst[15:0]};
     assign rn = rd_or_rt ? i_inst[15:11] : i_inst[20:16];
