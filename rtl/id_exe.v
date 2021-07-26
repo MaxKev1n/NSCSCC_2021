@@ -15,7 +15,7 @@ module id_exe(
     input [31:0] i_db,
     input [31:0] i_imm,
     input [4:0] i_rn,
-    input [14:0] i_ALUControl,
+    input [22:0] i_ALUControl,
     input [7:0] i_mem_control,
 
     output reg o_write_mem,
@@ -29,7 +29,7 @@ module id_exe(
     output reg [31:0] o_db,
     output reg [31:0] o_imm,
     output reg [4:0] o_rn,
-    output reg [14:0] o_ALUControl,
+    output reg [22:0] o_ALUControl,
     output reg [7:0] o_mem_control
 );
 

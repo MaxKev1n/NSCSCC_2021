@@ -24,7 +24,7 @@ module control_unit(
     output [31:0] bpc,
     output [31:0] jpc,
     output [1:0] pcsource,
-    output [14:0] ALUControl,
+    output [22:0] ALUControl,
     output [7:0] mem_control
 );
 
@@ -252,6 +252,14 @@ module control_unit(
     wire SRA_inst = inst_sra | inst_srav;
     wire LUI_inst = inst_lui;
     wire JUMP_BRANCH_inst = inst_jr | inst_beq | inst_bne | inst_j | inst_jal;
+    wire MULT_inst = inst_mult;
+    wire MULTU_inst = inst_multu;
+    wire DIV_inst = inst_div;
+    wire DIVU_inst = inst_divu;
+    wire MFHI_inst = inst_mfhi;
+    wire MFLO_inst = inst_mflo;
+    wire MTHI_inst = inst_mthi;
+    wire MTLO_inst = inst_mtlo;
 
     //
     assign R_type = inst_add | inst_addu | inst_sub | inst_subu | inst_or | inst_xor | inst_nor | inst_slt | inst_sltu | inst_sll | inst_srl | inst_sra | inst_sllv | inst_srlv |
@@ -274,22 +282,31 @@ module control_unit(
         SRL_inst,
         SRA_inst,
         LUI_inst,
-        JUMP_BRANCH_inst
+        JUMP_BRANCH_inst,
+        MULT_inst,
+        MULTU_inst,
+        DIV_inst,
+        DIVU_inst,
+        MFHI_inst,
+        MFLO_inst,
+        MTHI_inst,
+        MTLO_inst
     };
 
     assign write_mem = inst_sw;
     assign write_regfile = inst_add | inst_addu | inst_sub | inst_subu | inst_add | inst_or | inst_xor |
                            inst_nor | inst_slt | inst_sltu | inst_sll | inst_srl | inst_sra | inst_sllv |
                            inst_srlv | inst_srav | inst_addi | inst_addiu | inst_andi | inst_ori | inst_xori |
-                           inst_lui | inst_slti | inst_sltiu | inst_jal;
+                           inst_lui | inst_slti | inst_sltiu | inst_jal | inst_mfhi | inst_mflo;
     assign mem_to_regfile = inst_lw;
     assign jal = inst_jal;
     assign aluimm = inst_addi | inst_addiu | inst_andi | inst_ori | inst_xori | inst_lui | inst_lw | inst_sw |
                     inst_slti | inst_sltiu;
     assign shift = inst_sll | inst_srl | inst_sra | inst_sllv | inst_srlv | inst_srav;
     assign sext = inst_addi | inst_lw | inst_sw | inst_beq | inst_bne | inst_slti | inst_sltiu; //1'b1 sign : 1'b0 zero
-    assign rd_or_rt = inst_add | inst_addu | inst_sub | inst_subu | inst_and | inst_or | inst_xor | inst_nor |
-                      inst_slt | inst_sltu | inst_sll | inst_srl | inst_sra | inst_sllv | inst_srlv | inst_srav; //1'b1 rd : 1'b0 rt
+    assign rd_or_rt = inst_add  | inst_addu | inst_sub | inst_subu | inst_and | inst_or | inst_xor | inst_nor |
+                      inst_slt  | inst_sltu | inst_sll | inst_srl | inst_sra | inst_sllv | inst_srlv | inst_srav |
+                      inst_mfhi | inst_mflo; //1'b1 rd : 1'b0 rt
 
     wire is_branch = rs_eq_rt & inst_beq ? 1'b1 : (!rs_eq_rt & inst_bne ? 1'b1 : 1'b0);
     assign bpc = pc + {16{inst[15], inst[15:0]}};

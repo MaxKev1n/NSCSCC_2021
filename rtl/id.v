@@ -26,7 +26,7 @@ module ID(
     output [31:0] jpc,
     output [31:0] jrpc,
     output [1:0] pcsource,
-    output [14:0] ALUControl,
+    output [22:0] ALUControl,
     output [7:0] mem_control
 );
     wire rs_eq_rt;
