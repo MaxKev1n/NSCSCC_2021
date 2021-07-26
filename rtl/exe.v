@@ -12,13 +12,15 @@ module exe(
     input [22:0] ALUControl,
     input [31:0] i_hi,
     input [31:0] i_lo,
+    input [4:0] i_ern,
 
     output [31:0] ea,
     output [31:0] eb,
     output reg [31:0] hi,
     output reg [31:0] lo,
     output write_hi,
-    output write_lo
+    output write_lo,
+    output [4:0] o_ern
 );
 
     wire [31:0] pc8;
@@ -42,6 +44,7 @@ module exe(
 
     assign ea = jal ? pc8 : dout;
     assign eb = db;
+    assign o_ern = jal ? 5'd31 : i_ern;
     assign write_hilo = (ALUControl == `MULT || ALUControl == `MULTU) ? 1'b1 : 1'b0;
 
     wire [31:0] complement;

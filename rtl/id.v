@@ -30,7 +30,9 @@ module ID(
     output [31:0] jrpc,
     output [1:0] pcsource,
     output [22:0] ALUControl,
-    output [7:0] mem_control
+    output [7:0] mem_control,
+    output [31:0] da,
+    output [31:0] db
 );
     wire rs_eq_rt;
     wire rd_or_rt;
