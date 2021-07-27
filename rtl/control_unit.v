@@ -25,7 +25,10 @@ module control_unit(
     output [31:0] jpc,
     output [1:0] pcsource,
     output [22:0] ALUControl,
-    output [7:0] mem_control
+    output [7:0] mem_control,
+    output sys,
+    output break,
+    output mtc0_we
 );
 
     wire [5:0] op = inst[31:26];
@@ -325,6 +328,9 @@ module control_unit(
         inst_sh,
         inst_sw
     };
+    assign sys = inst_syscall;
+    assign break = inst_break;
+    assign mtc0_we = inst_mtc0;
 
     always @(*) begin
         fwda = 2'b00;

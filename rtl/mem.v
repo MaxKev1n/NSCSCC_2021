@@ -5,8 +5,14 @@ module mem(
     input [31:0] addr,
     input [7:0] mem_control,
     output reg [31:0] dout,
-    output reg [3:0] store_control
+    output reg [3:0] store_control,
+    output AdEs
 );
+
+    assign AdEs = ((mem_control == `MEM_LH || mem_control == `MEM_LHU) && addr[0] != 1'b0) ||
+                   (mem_control == `MEM_LW && addr[1:0] != 2'b00) ||
+                   (mem_control == `MEM_SW && addr[1:0] != 2'b00) ||
+                   (mem_control == `MEM_SH && addr[0] != 1'b0)) ? 1'b1 : 1'b0;
 
     always @(*) begin
         case(mem_control)

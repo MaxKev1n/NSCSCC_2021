@@ -20,7 +20,8 @@ module exe(
     output reg [31:0] lo,
     output write_hi,
     output write_lo,
-    output [4:0] o_ern
+    output [4:0] o_ern,
+    output overflow
 );
 
     wire [31:0] pc8;
@@ -55,6 +56,7 @@ module exe(
     wire [63:0] res_div;
     wire [63:0] res_div_u;
 
+    assign overflow = (ALU1[31] & ~res_sum[31] & ALU2[31] | ~ALU1[31] & res_sum[31] & ~ALU2[31]) & ((ALUControl == `ADD) | (ALUControl == `SUB));
     assign complement = (ALUControl == `SLT || ALUControl == `SUB || ALUControl == `SUBU) ? (~ALU2 + 1) : ALU2;
     assign res_sum = ALU1 + complement;
     assign a_compare_b = (ALUControl == `SLT) ? ((ALU1[31] && db[31] && res_sum[31]) || (ALU1[31] && !ALU2[31]) || (!ALU1[31] && !ALU2[31] && res_sum[31])) : (ALU1 < ALU2);
