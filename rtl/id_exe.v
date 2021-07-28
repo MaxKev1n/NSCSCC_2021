@@ -18,6 +18,10 @@ module id_exe(
     input [22:0] i_ALUControl,
     input [7:0] i_mem_control,
     input i_mtc0_we,
+    input [4:0] i_c0_addr,
+    input [31:0] i_except,
+    input i_next_is_delayslot,
+    input i_bd,
 
     output reg o_write_mem,
     output reg o_write_regfile,
@@ -32,7 +36,11 @@ module id_exe(
     output reg [4:0] o_rn,
     output reg [22:0] o_ALUControl,
     output reg [7:0] o_mem_control,
-    output reg o_mtc0_we
+    output reg o_mtc0_we,
+    output reg [4:0] c0_addr,
+    output reg o_except,
+    output reg o_next_is_delayslot,
+    output reg o_bd
 );
 
     always @(posedge clk) begin
@@ -51,6 +59,10 @@ module id_exe(
         o_ALUControl <= 15'd0;
         o_mem_control <= 8'd0;
         o_mtc0_we <= `ZeroBit;
+        o_except <= `ZeroWord;
+        o_c0_addr <= 5'b00000;
+        o_next_is_delayslot <= `ZeroBit;
+        o_bd <= `ZeroBit;
     end else if(stall[2] == `Stop && stall[3] == `NoStop) begin
         o_write_mem <= `ZeroBit;
         o_write_regfile <= `ZeroBit;
@@ -66,6 +78,10 @@ module id_exe(
         o_ALUControl <= 15'd0;
         o_mem_control <= 8'd0;
         o_mtc0_we <= `ZeroBit;
+        o_except <= `ZeroWord;
+        o_c0_addr <= 5'b00000;
+        o_next_is_delayslot <= `ZeroBit;
+        o_bd <= `ZeroBit;
     end else if(stall[2] == `NoStop) begin
         o_write_mem <= i_write_mem;
         o_write_regfile <= i_write_regfile;
@@ -81,6 +97,10 @@ module id_exe(
         o_ALUControl <= i_ALUControl;
         o_mem_control <= i_mem_control;
         o_mtc0_we <= i_mtc0_we;
+        o_except <= i_except;
+        o_c0_addr <= i_c0_addr;
+        o_next_is_delayslot <= i_next_is_delayslot;
+        o_bd <= i_bd;
     end
     end
 

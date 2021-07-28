@@ -16,6 +16,8 @@ module ID(
     input [31:0] ALUres,
     input [31:0] exe_mem_data,
     input [31:0] mem_data,
+    input [31:0] i_except,
+    input i_bd,
 
     output [31:0] imm,
     output [4:0] rn,
@@ -33,14 +35,18 @@ module ID(
     output [7:0] mem_control,
     output [31:0] da,
     output [31:0] db,
-    output sys,
-    output break,
-    output mtc0_we
+    output mtc0_we,
+    output [4:0] c0_addr,
+    output [31:0] o_except,
+    output next_is_delayslot,
+    output o_bd
 );
     wire rs_eq_rt;
     wire rd_or_rt;
     wire [1:0] fwda, fwdb;
     wire [31:0] qa, qb;
+    wire sys;
+    wire break;
 
     assign rs_eq_rt = qa == qb ? 1'b1 : 1'b0;
 
@@ -50,7 +56,8 @@ module ID(
                     .mem_write_regfile(mem_write_regfile), .write_mem(write_mem), .write_regfile(write_regfile),
                     .mem_to_regfile(mem_to_regfile), .jal(jal), .aluimm(aluimm), .shift(shift), .sext(sext),
                     .rd_or_rt(rd_or_rt), .fwda(fwda), .fwdb(fwdb), .bpc(bpc), .jpc(jpc), .pcsource(pcsource),
-                    .ALUControl(ALUControl), .mem_control(mem_control), .sys(sys), .break(break), .mtc0_we(mtc0_we));
+                    .ALUControl(ALUControl), .mem_control(mem_control), .sys(sys), .break(break), .mtc0_we(mtc0_we),
+                    .c0_addr(c0_addr), .next_is_delayslot(next_is_delayslot));
 
     mux4x32 MUX1(.a0(qa), .a1(ALUres), .a2(exe_mem_data), .a3(mem_data), .s(fwda), .res(da));
     mux4x32 MUX2(.a0(qb), .a1(ALUres), .a2(exe_mem_data), .a3(mem_data), .s(fwdb), .res(db));
@@ -58,5 +65,8 @@ module ID(
     assign imm = sext ? {{16{i_inst[15]}}, i_inst[15:0]} : {16'd0, i_inst[15:0]};
     assign rn = rd_or_rt ? i_inst[15:11] : i_inst[20:16];
     assign jrpc = da;
+    assign o_except[8] = sys ? 1'b1 : 1'b0;
+    assign o_except[9] = break ? 1'b1 : 1'b0;
+    assign o_bd = i_bd;
 
 endmodule

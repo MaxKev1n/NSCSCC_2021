@@ -12,6 +12,9 @@ module exe_mem(
     input [4:0] i_rn,
     input [7:0] i_mem_control,
     input i_mtc0_we,
+    input [4:0] i_c0_addr,
+    input [31:0] i_except,
+    input i_bd,
 
     output reg o_write_mem,
     output reg o_write_regfile,
@@ -20,7 +23,10 @@ module exe_mem(
     output reg [31:0] o_db,
     output reg [4:0] o_rn,
     output reg [7:0] o_mem_control,
-    output reg o_mtc0_we
+    output reg o_mtc0_we,
+    output reg [4:0] o_c0_addr,
+    output reg [31:0] o_except,
+    output reg o_bd
 );
 
     always @(posedge clk) begin
@@ -33,6 +39,9 @@ module exe_mem(
             o_rn <= 5'b00000;
             o_mem_control <= 8'd0;
             o_mtc0_we <= `ZeroBit;
+            o_except <= `ZeroWord;
+            o_c0_addr <= 5'b00000;
+            o_bd <= `ZeroBit;
         end else if(stall[3] == `Stop && stall[3] == `NoStop) begin
             o_write_mem <= `ZeroBit;
             o_write_regfile <= `ZeroBit;
@@ -42,6 +51,9 @@ module exe_mem(
             o_rn <= 5'b00000;
             o_mem_control <= 8'd0;
             o_mtc0_we <= `ZeroBit;
+            o_except <= `ZeroWord;
+            o_c0_addr <= 5'b00000;
+            o_bd <= `ZeroBit;
         end else if(stall[3] == `NoStop) begin
             o_write_mem <= i_write_mem;
             o_write_regfile <= i_write_regfile;
@@ -51,6 +63,9 @@ module exe_mem(
             o_rn <= i_rn;
             o_mem_control <= i_mem_control;
             o_mtc0_we <= i_mtc0_we;
+            o_except <= i_except;
+            o_c0_addr <=i_c0_addr;
+            o_bd <= i_bd;
         end
     end
 

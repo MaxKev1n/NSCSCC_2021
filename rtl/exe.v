@@ -13,6 +13,7 @@ module exe(
     input [31:0] i_hi,
     input [31:0] i_lo,
     input [4:0] i_ern,
+    input [31:0] i_except,
 
     output [31:0] ea,
     output [31:0] eb,
@@ -21,12 +22,13 @@ module exe(
     output write_hi,
     output write_lo,
     output [4:0] o_ern,
-    output overflow
+    output [31:0] o_except
 );
 
     wire [31:0] pc8;
     wire [31:0] ALU1;
     wire [31:0] ALU2;
+    wire overflow;
     reg [31:0] dout;
     wire s_axis_divisor_tvalid;
     wire s_axis_divisor_tready;
@@ -42,6 +44,7 @@ module exe(
     assign ALU1 = shift ? imm : da;
     assign ALU2 = aluimm ? imm : db;
     assign pc8 = pc + 32'd4;
+    assign o_except[12] = overflow ? 1'b1 : 1'b0;
 
     assign ea = jal ? pc8 : dout;
     assign eb = db;
