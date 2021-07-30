@@ -4,11 +4,11 @@ module mem(
     input [31:0] din,
     input [31:0] addr,
     input [7:0] mem_control,
-    input [31:0] i_except,
+    input [6:0] i_except,
 
     output reg [31:0] dout,
     output reg [3:0] store_control,
-    output reg [31:0] o_except
+    output reg [6:0] o_except
 );
     wire AdES;
     wire AdEL;
@@ -18,8 +18,7 @@ module mem(
 
     assign AdES = ((mem_control == `MEM_SW && addr[1:0] != 2'b00) ||
                    (mem_control == `MEM_SH && addr[0] != 1'b0)) ? 1'b1 : 1'b0;
-    assign o_except[4] = AdEL ? 1'b1 : 1'b0;
-    assign o_except[5] = AdES ? 1'b1 : 1'b0;
+    assign o_except = {i_except[6:3], AdES, AdEL, i_except[0]};
 
     always @(*) begin
         case(mem_control)

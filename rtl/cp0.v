@@ -46,7 +46,7 @@ module cp0(
     end
 
     always @(posedge clk) begin
-        if(mtc0_we && !wb_except && c0_addr == `CR_STATUS) begin
+        if(mtc0_we && !wb_except && c0_addr == `CR_STATUS ) begin
             c0_status_im <= c0_wdata[15:8];
         end
     end

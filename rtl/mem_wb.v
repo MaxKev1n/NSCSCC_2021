@@ -11,8 +11,11 @@ module mem_wb(
     input i_mem_to_regfile,
     input i_mtc0_we,
     input [4:0] i_c0_addr,
-    input [31:0] i_except,
+    input [6:0] i_except,
     input i_bd,
+    input i_eret,
+    input flush,
+    input [31:0] i_c0_wdata,
 
     output reg [31:0] o_d1,
     output reg[31:0] o_d2,
@@ -21,8 +24,10 @@ module mem_wb(
     output reg o_mem_to_regfile,
     output reg o_mtc0_we,
     output reg [4:0] o_c0_addr,
-    output reg [31:0] o_except,
-    output reg o_bd
+    output reg [6:0] o_except,
+    output reg o_bd,
+    output reg o_eret,
+    output reg [31:0] o_c0_wdata
 );
 
     always @(posedge clk) begin
@@ -33,9 +38,23 @@ module mem_wb(
             o_write_regfile <= `ZeroBit;
             o_mem_to_regfile <= `ZeroBit;
             o_mtc0_we <= `ZeroBit;
-            o_except <= `ZeroWord;
+            o_except <= 7'd0;
             o_c0_addr <= 5'b00000;
             o_bd <= `ZeroBit;
+            o_eret <= `ZeroBit;
+            o_c0_wdata <= `ZeroWord;
+        end else if(flush) begin
+            o_d1 <= `ZeroWord;
+            o_d2 <= `ZeroWord;
+            o_rn <= 5'b00000;
+            o_write_regfile <= `ZeroBit;
+            o_mem_to_regfile <= `ZeroBit;
+            o_mtc0_we <= `ZeroBit;
+            o_except <= 7'd0;
+            o_c0_addr <= 5'b00000;
+            o_bd <= `ZeroBit;
+            o_eret <= `ZeroBit;
+            o_c0_wdata <= `ZeroWord;
         end else if(stall[4] == `Stop && stall[5] == `NoStop) begin
             o_d1 <= `ZeroWord;
             o_d2 <= `ZeroWord;
@@ -43,9 +62,11 @@ module mem_wb(
             o_write_regfile <= `ZeroBit;
             o_mem_to_regfile <= `ZeroBit;
             o_mtc0_we <= `ZeroBit;
-            o_except <= `ZeroWord;
+            o_except <= 7'd0;
             o_c0_addr <= 5'b00000;
             o_bd <= `ZeroBit;
+            o_eret <= `ZeroBit;
+            o_c0_wdata <= `ZeroWord;
         end else if(stall[4] == `NoStop) begin
             o_d1 <= i_d1;
             o_d2 <= i_d2;
@@ -56,6 +77,8 @@ module mem_wb(
             o_except <= i_except;
             o_c0_addr <= i_c0_addr;
             o_bd <= i_bd;
+            o_eret <= i_eret;
+            o_c0_wdata <= i_c0_wdata;
         end
     end
 

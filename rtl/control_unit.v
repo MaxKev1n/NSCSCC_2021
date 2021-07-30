@@ -30,7 +30,8 @@ module control_unit(
     output break,
     output mtc0_we,
     output [4:0] c0_addr,
-    output next_is_delayslot
+    output next_is_delayslot,
+    output eret
 );
 
     wire [5:0] op = inst[31:26];
@@ -335,6 +336,7 @@ module control_unit(
     assign mtc0_we = inst_mtc0;
     assign c0_addr = inst[15:11];
     assign next_is_delayslot = inst_beq | inst_bne | inst_j | inst_jal | inst_jr;
+    assign eret = inst_eret;
 
     always @(*) begin
         fwda = 2'b00;
