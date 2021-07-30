@@ -12,15 +12,9 @@ module cp0(
     input [4:0] wb_excode,
     input [31:0] wb_pc,
     input [31:0] wb_badvaddr,
+    input [4:0] addr,
 
-    output [7:0] o_c0_status_im,
-    output o_c0_cause_bd,
-    output o_c0_cause_ti,
-    output [7:0] o_c0_cause_ip,
-    output [4:0] o_c0_cause_excode,
-    output o_c0_epc,
-    output o_c0_badvaddr,
-    output o_c0_count
+    output [31:0] data
 );
 
     reg c0_status_bev;
@@ -116,14 +110,14 @@ module cp0(
 
     always @(posedge clk) begin
         if(wb_except && !c0_status_exl) begin
-            c0_epc <= wb_bd ? wb_pc - 3'h4 : wb_pc;
+            c0_epc <= wb_bd ? wb_pc - 31'h4 : wb_pc;
         end else if(mtc0_we && !wb_except && c0_addr == `CR_EPC) begin
             c0_epc <= c0_wdata;
         end
     end
 
     always @(posedge clk) begin
-       if(wb_except && wb_excode == `EX_ADEL) begin
+       if(wb_except && (wb_excode == 5'h04 || wb_excode == 5'h05)) begin
            c0_badvaddr <= wb_badvaddr;
        end 
     end
@@ -149,14 +143,17 @@ module cp0(
         end
     end
 
-    assign o_c0_status_im = c0_status_im;
-    assign o_c0_cause_bd = c0_cause_bd;
-    assign o_c0_cause_ti = c0_cause_ti;
-    assign o_c0_cause_ip = c0_cause_ip;
-    assign o_c0_cause_excode = c0_cause_excode;
-    assign o_c0_ep = c0_epc;
-    assign o_c0_badvaddr = c0_badvaddr;
-    assign o_c0_count = c0_count;
+   assign data = addr == `CR_COUNT   ? c0_count : (
+                 addr == `CR_COMPARE ? c0_compare : (
+                 addr == `CR_STATUS  ? {9'd0, c0_status_bev, 6'd0, c0_status_im, 6'd0, c0_status_exl, c0_status_ie} : (
+                 addr == `CR_CAUSE   ? {c0_cause_bd, c0_cause_ti, 14'd0, c0_cause_ip, 1'b0, c0_cause_excode, 2'b00} : (
+                 addr == `CR_EPC     ? c0_epc : (
+                 addr == `CR_BAD    
+                 )    
+                 )    
+                 )
+                 )
+   )
 
     assign count_eq_compare = c0_count == c0_compare ? 1'b1 : 1'b0;
 endmodule
