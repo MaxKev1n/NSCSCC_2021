@@ -40,7 +40,8 @@ module ID(
     output [6:0] o_except,
     output next_is_delayslot,
     output o_bd,
-    output eret
+    output eret,
+    output write_from_cp0
 );
     wire rs_eq_rt;
     wire rd_or_rt;
@@ -58,7 +59,7 @@ module ID(
                     .mem_to_regfile(mem_to_regfile), .jal(jal), .aluimm(aluimm), .shift(shift), .sext(sext),
                     .rd_or_rt(rd_or_rt), .fwda(fwda), .fwdb(fwdb), .bpc(bpc), .jpc(jpc), .pcsource(pcsource),
                     .ALUControl(ALUControl), .mem_control(mem_control), .sys(sys), .break(break), .mtc0_we(mtc0_we),
-                    .c0_addr(c0_addr), .next_is_delayslot(next_is_delayslot), .eret(eret));
+                    .c0_addr(c0_addr), .next_is_delayslot(next_is_delayslot), .eret(eret), .write_from_cp0(write_from_cp0));
 
     mux4x32 MUX1(.a0(qa), .a1(ALUres), .a2(exe_mem_data), .a3(mem_data), .s(fwda), .res(da));
     mux4x32 MUX2(.a0(qb), .a1(ALUres), .a2(exe_mem_data), .a3(mem_data), .s(fwdb), .res(db));

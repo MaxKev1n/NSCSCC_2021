@@ -8,7 +8,7 @@ module mem(
 
     output reg [31:0] dout,
     output reg [3:0] store_control,
-    output reg [6:0] o_except
+    output [6:0] o_except
 );
     wire AdES;
     wire AdEL;

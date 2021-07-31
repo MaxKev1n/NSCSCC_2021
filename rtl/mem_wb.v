@@ -17,6 +17,7 @@ module mem_wb(
     input flush,
     input [31:0] i_c0_wdata,
     input [31:0] i_pc,
+    input i_write_from_cp0,
 
     output reg [31:0] o_d1,
     output reg[31:0] o_d2,
@@ -29,7 +30,8 @@ module mem_wb(
     output reg o_bd,
     output reg o_eret,
     output reg [31:0] o_c0_wdata,
-    output reg [31:0] o_pc
+    output reg [31:0] o_pc,
+    output reg o_write_from_cp0
 );
 
     always @(posedge clk) begin
@@ -46,6 +48,7 @@ module mem_wb(
             o_eret <= `ZeroBit;
             o_c0_wdata <= `ZeroWord;
             o_pc <= `ZeroWord;
+            o_write_from_cp0 <= `ZeroBit;
         end else if(flush) begin
             o_d1 <= `ZeroWord;
             o_d2 <= `ZeroWord;
@@ -59,6 +62,7 @@ module mem_wb(
             o_eret <= `ZeroBit;
             o_c0_wdata <= `ZeroWord;
             o_pc <= `ZeroWord;
+            o_write_from_cp0 <= `ZeroBit;
         end else if(stall[4] == `Stop && stall[5] == `NoStop) begin
             o_d1 <= `ZeroWord;
             o_d2 <= `ZeroWord;
@@ -72,6 +76,7 @@ module mem_wb(
             o_eret <= `ZeroBit;
             o_c0_wdata <= `ZeroWord;
             o_pc <= `ZeroWord;
+            o_write_from_cp0 <= `ZeroBit;
         end else if(stall[4] == `NoStop) begin
             o_d1 <= i_d1;
             o_d2 <= i_d2;
@@ -85,6 +90,7 @@ module mem_wb(
             o_eret <= i_eret;
             o_c0_wdata <= i_c0_wdata;
             o_pc <= i_pc;
+            o_write_from_cp0 <= i_write_from_cp0;
         end
     end
 

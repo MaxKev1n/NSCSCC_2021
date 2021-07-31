@@ -143,17 +143,17 @@ module cp0(
         end
     end
 
-   assign data = addr == `CR_COUNT   ? c0_count : (
-                 addr == `CR_COMPARE ? c0_compare : (
-                 addr == `CR_STATUS  ? {9'd0, c0_status_bev, 6'd0, c0_status_im, 6'd0, c0_status_exl, c0_status_ie} : (
-                 addr == `CR_CAUSE   ? {c0_cause_bd, c0_cause_ti, 14'd0, c0_cause_ip, 1'b0, c0_cause_excode, 2'b00} : (
-                 addr == `CR_EPC     ? c0_epc : (
-                 addr == `CR_BAD    
+   assign data = addr == `CR_COUNT    ? c0_count : (
+                 addr == `CR_COMPARE  ? c0_compare : (
+                 addr == `CR_STATUS   ? {9'd0, c0_status_bev, 6'd0, c0_status_im, 6'd0, c0_status_exl, c0_status_ie} : (
+                 addr == `CR_CAUSE    ? {c0_cause_bd, c0_cause_ti, 14'd0, c0_cause_ip, 1'b0, c0_cause_excode, 2'b00} : (
+                 addr == `CR_EPC      ? c0_epc : (
+                 addr == `CR_BADVADDR ? c0_badvaddr : `ZeroWord  
                  )    
                  )    
                  )
                  )
-   )
+   );
 
     assign count_eq_compare = c0_count == c0_compare ? 1'b1 : 1'b0;
 endmodule

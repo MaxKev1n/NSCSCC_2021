@@ -33,3 +33,9 @@
 `define MEM_SB  8'b00000100
 `define MEM_SH  8'b00000010
 `define MEM_SW  8'b00000001
+`define CR_BADVADDR 5'd8
+`define CR_COUNT 5'd9
+`define CR_COMPARE 5'd11
+`define CR_STATUS 5'd12
+`define CR_CAUSE 5'd13
+`define CR_EPC 5'd14

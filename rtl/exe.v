@@ -44,7 +44,7 @@ module exe(
     assign ALU1 = shift ? imm : da;
     assign ALU2 = aluimm ? imm : db;
     assign pc8 = pc + 32'd4;
-    assign o_except = {i_except[6:4], overflow, i_except[2:0]}
+    assign o_except = {i_except[6:4], overflow, i_except[2:0]};
 
     assign ea = jal ? pc8 : dout;
     assign eb = db;

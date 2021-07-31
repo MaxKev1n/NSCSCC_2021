@@ -24,6 +24,6 @@ module pc(
         end
     end
 
-    wire AdEL = pc[1:0] == 2'b00 ? 1'b0 : 1'b1
+    wire AdEL = i_pc[1:0] == 2'b00 ? 1'b0 : 1'b1;
 
 endmodule

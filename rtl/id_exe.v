@@ -24,6 +24,7 @@ module id_exe(
     input i_bd,
     input i_eret,
     input flush,
+    input i_write_from_cp0,
 
     output reg o_write_mem,
     output reg o_write_regfile,
@@ -43,7 +44,8 @@ module id_exe(
     output reg [6:0] o_except,
     output reg o_next_is_delayslot,
     output reg o_bd,
-    output reg o_eret
+    output reg o_eret,
+    output reg o_write_from_cp0
 );
 
     always @(posedge clk) begin
@@ -67,6 +69,7 @@ module id_exe(
             o_next_is_delayslot <= `ZeroBit;
             o_bd <= `ZeroBit;
             o_eret <= `ZeroBit;
+            o_write_from_cp0 <= `ZeroBit;
         end else if(flush) begin
             o_write_mem <= `ZeroBit;
             o_write_regfile <= `ZeroBit;
@@ -87,6 +90,7 @@ module id_exe(
             o_next_is_delayslot <= `ZeroBit;
             o_bd <= `ZeroBit;
             o_eret <= `ZeroBit;
+            o_write_from_cp0 <= `ZeroBit;
         end else if(stall[2] == `Stop && stall[3] == `NoStop) begin
             o_write_mem <= `ZeroBit;
             o_write_regfile <= `ZeroBit;
@@ -107,6 +111,7 @@ module id_exe(
             o_next_is_delayslot <= `ZeroBit;
             o_bd <= `ZeroBit;
             o_eret <= `ZeroBit;
+            o_write_from_cp0 <= `ZeroBit;
         end else if(stall[2] == `NoStop) begin
             o_write_mem <= i_write_mem;
             o_write_regfile <= i_write_regfile;
@@ -127,6 +132,7 @@ module id_exe(
             o_next_is_delayslot <= i_next_is_delayslot;
             o_bd <= i_bd;
             o_eret <= i_eret;
+            o_write_from_cp0 <= o_write_from_cp0;
         end
     end
 
