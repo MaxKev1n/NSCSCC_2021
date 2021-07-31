@@ -3,7 +3,7 @@
 module top(
     input clk,
     input reset,
-    input [5:0] stall,
+    //input [5:0] stall,
     output [31:0] pc,
     output [31:0] pc4,
     output [31:0] inst,
@@ -22,7 +22,7 @@ module top(
     output [1:0] pcsource,
     output [31:0] jrpc
 );
-
+    wire [5:0] stall;
     wire [31:0] npc;
     wire [1:0] pcsource;
     wire [31:0] bpc;
@@ -124,10 +124,12 @@ module top(
     wire [4:0] wb_excode;
     wire [31:0] real_pc;
     wire [31:0] cp0_o_data;
+    wire [31:0] epc;
+    wire [31:0] except_pc;
 
     assign real_pc = mem_wb_pc - 32'h4;
 
-    pc PC(.clk(clk), .reset(reset), .stall(stall), .i_pc(npc), .flush(flush), .o_pc(pc), .o_except(pc_except));
+    pc PC(.clk(clk), .reset(reset), .stall(stall), .i_pc(npc), .flush(flush), .except_pc(except_pc), .o_pc(pc), .o_except(pc_except));
 
     If IF(.i_pc(pc), .pcsource(pcsource), .bpc(bpc), .jpc(jpc), .jrpc(jrpc), .pc4(pc4), .inst(inst), .npc(npc));
 
@@ -190,6 +192,8 @@ module top(
                               .o_hi(reg_hilo_hi), .o_lo(reg_hilo_lo));
 
     cp0 CP0(.clk(clk), .reset(reset), .c0_addr(mem_wb_c0_addr), .mtc0_we(mem_wb_mtc0_we), .wb_except(wb_except), .wb_bd(mem_wb_bd), .eret_flush(mem_wb_eret),
-            .c0_wdata(mem_wb_c0_wdata), .ext_int_in(), .wb_excode(wb_excode), .wb_pc(real_pc), .wb_badvaddr(real_pc), .addr(waddr), .data(cp0_o_data));
+            .c0_wdata(mem_wb_c0_wdata), .ext_int_in(), .wb_excode(wb_excode), .wb_pc(real_pc), .wb_badvaddr(real_pc), .addr(waddr), .data(cp0_o_data),
+            .epc(epc));
 
+    crtl CRTL(.reset(reset), .i_except(mem_wb_except), .i_epc(epc), .i_eret(mem_wb_eret), .flush(flush), .stall(stall), .new_pc(except_pc));
 endmodule

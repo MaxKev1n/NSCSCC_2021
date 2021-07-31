@@ -6,6 +6,7 @@ module pc(
     input [5:0] stall,
     input [31:0] i_pc,
     input flush,
+    input [31:0] except_pc,
     output reg [31:0] o_pc,
     output reg [6:0] o_except
 );
@@ -15,7 +16,7 @@ module pc(
             o_pc <= `ZeroWord;
             o_except <= `ZeroWord;
         end else if(flush) begin
-            o_pc <= `ZeroWord;
+            o_pc <= except_pc;
         end else if(stall[0] == `Stop && stall[1] == `NoStop) begin
             o_pc <= `ZeroWord;
         end else if(stall[0] == `NoStop) begin

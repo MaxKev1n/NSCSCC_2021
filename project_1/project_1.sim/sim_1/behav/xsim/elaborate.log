@@ -4,10 +4,10 @@ Running: D:/Xilinx/Vivado/2019.2/bin/unwrapped/win64.o/xelab.exe -wto b9565a0f93
 Using 2 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
-WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 7 for port 'o_except' [E:/NSCSCC/NSCSCC_2021/rtl/top.v:143]
-WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 7 for port 'i_except' [E:/NSCSCC/NSCSCC_2021/rtl/top.v:151]
-WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 7 for port 'o_except' [E:/NSCSCC/NSCSCC_2021/rtl/top.v:174]
-WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 7 for port 'i_except' [E:/NSCSCC/NSCSCC_2021/rtl/top.v:180]
+WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 7 for port 'o_except' [E:/NSCSCC/NSCSCC_2021/rtl/top.v:145]
+WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 7 for port 'i_except' [E:/NSCSCC/NSCSCC_2021/rtl/top.v:153]
+WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 7 for port 'o_except' [E:/NSCSCC/NSCSCC_2021/rtl/top.v:176]
+WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 7 for port 'i_except' [E:/NSCSCC/NSCSCC_2021/rtl/top.v:182]
 Completed static elaboration
 Starting simulation data flow analysis
 Completed simulation data flow analysis
@@ -116,6 +116,7 @@ Compiling module xil_defaultlib.mem_wb
 Compiling module xil_defaultlib.wb
 Compiling module xil_defaultlib.regfile_hilo
 Compiling module xil_defaultlib.cp0
+Compiling module xil_defaultlib.crtl
 Compiling module xil_defaultlib.top
 Compiling module xil_defaultlib.tb
 Compiling module xil_defaultlib.glbl

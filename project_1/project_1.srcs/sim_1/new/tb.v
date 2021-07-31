@@ -45,7 +45,7 @@ module tb(
     wire [31:0] jrpc;
 
 
-    top TOP(.clk(clk), .reset(reset), .stall(6'b000000), .pc(pc), .pc4(pc4), .inst(inst), .if_id_inst(if_id_inst), .ALURes(ALURes), .id_da(id_da), .id_db(id_db), .id_exe_imm(id_exe_imm),
+    top TOP(.clk(clk), .reset(reset), .pc(pc), .pc4(pc4), .inst(inst), .if_id_inst(if_id_inst), .ALURes(ALURes), .id_da(id_da), .id_db(id_db), .id_exe_imm(id_exe_imm),
             .mem_wb_d1(mem_wb_d1), .mem_wb_d2(mem_wb_d2), .wdata(wdata), .waddr(waddr), .wb_write_regfile(wb_write_regfile), .data_ram_out(data_ram_out), .exe_mem_da(exe_mem_da),
             .pcsource(pcsource), .jrpc(jrpc));
 

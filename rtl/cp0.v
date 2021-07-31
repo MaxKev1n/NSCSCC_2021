@@ -14,7 +14,8 @@ module cp0(
     input [31:0] wb_badvaddr,
     input [4:0] addr,
 
-    output [31:0] data
+    output [31:0] data,
+    output [31:0] epc
 );
 
     reg c0_status_bev;
@@ -156,4 +157,5 @@ module cp0(
    );
 
     assign count_eq_compare = c0_count == c0_compare ? 1'b1 : 1'b0;
+    assign epc = c0_epc;
 endmodule

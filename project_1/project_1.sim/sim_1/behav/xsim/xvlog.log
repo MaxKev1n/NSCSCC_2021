@@ -16,6 +16,8 @@ INFO: [VRFC 10-2458] undeclared symbol I_type, assumed default net type wire [E:
 INFO: [VRFC 10-2458] undeclared symbol J_type, assumed default net type wire [E:/NSCSCC/NSCSCC_2021/rtl/control_unit.v:275]
 INFO: [VRFC 10-2263] Analyzing Verilog file "E:/NSCSCC/NSCSCC_2021/rtl/cp0.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module cp0
+INFO: [VRFC 10-2263] Analyzing Verilog file "E:/NSCSCC/NSCSCC_2021/rtl/crtl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module crtl
 INFO: [VRFC 10-2263] Analyzing Verilog file "E:/NSCSCC/NSCSCC_2021/rtl/exe.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module exe
 INFO: [VRFC 10-2458] undeclared symbol write_hilo, assumed default net type wire [E:/NSCSCC/NSCSCC_2021/rtl/exe.v:52]
@@ -33,7 +35,7 @@ INFO: [VRFC 10-2263] Analyzing Verilog file "E:/NSCSCC/NSCSCC_2021/rtl/mux4x32.v
 INFO: [VRFC 10-311] analyzing module mux4x32
 INFO: [VRFC 10-2263] Analyzing Verilog file "E:/NSCSCC/NSCSCC_2021/rtl/pc.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module pc
-WARNING: [VRFC 10-3380] identifier 'AdEL' is used before its declaration [E:/NSCSCC/NSCSCC_2021/rtl/pc.v:23]
+WARNING: [VRFC 10-3380] identifier 'AdEL' is used before its declaration [E:/NSCSCC/NSCSCC_2021/rtl/pc.v:24]
 INFO: [VRFC 10-2263] Analyzing Verilog file "E:/NSCSCC/NSCSCC_2021/rtl/regfile.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module regfile
 INFO: [VRFC 10-2263] Analyzing Verilog file "E:/NSCSCC/NSCSCC_2021/rtl/regfile_hilo.v" into library xil_defaultlib
@@ -54,7 +56,7 @@ WARNING: [VRFC 10-3676] redeclaration of ansi port 'exe_mem_da' is not allowed [
 WARNING: [VRFC 10-3676] redeclaration of ansi port 'data_ram_out' is not allowed [E:/NSCSCC/NSCSCC_2021/rtl/top.v:109]
 WARNING: [VRFC 10-3676] redeclaration of ansi port 'mem_wb_d1' is not allowed [E:/NSCSCC/NSCSCC_2021/rtl/top.v:110]
 WARNING: [VRFC 10-3676] redeclaration of ansi port 'mem_wb_d2' is not allowed [E:/NSCSCC/NSCSCC_2021/rtl/top.v:111]
-INFO: [VRFC 10-2458] undeclared symbol flush, assumed default net type wire [E:/NSCSCC/NSCSCC_2021/rtl/top.v:130]
+INFO: [VRFC 10-2458] undeclared symbol flush, assumed default net type wire [E:/NSCSCC/NSCSCC_2021/rtl/top.v:132]
 INFO: [VRFC 10-2263] Analyzing Verilog file "E:/NSCSCC/NSCSCC_2021/rtl/wb.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module wb
 INFO: [VRFC 10-2458] undeclared symbol excode, assumed default net type wire [E:/NSCSCC/NSCSCC_2021/rtl/wb.v:17]

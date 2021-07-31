@@ -6,6 +6,7 @@ verilog xil_defaultlib  --include "../../../../../rtl" \
 "../../../../../rtl/If.v" \
 "../../../../../rtl/control_unit.v" \
 "../../../../../rtl/cp0.v" \
+"../../../../../rtl/crtl.v" \
 "../../../../../rtl/exe.v" \
 "../../../../../rtl/exe_mem.v" \
 "../../../../../rtl/id_exe.v" \
